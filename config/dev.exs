@@ -83,3 +83,9 @@ config :phoenix_live_view,
 
 # Disable swoosh api client as it is only required for production adapters.
 config :swoosh, :api_client, false
+
+# Local ArchivEE database
+config :ee_web_archive,
+  ecto_repos: [EEWebArchive.ArchivEERepo]
+config :ee_web_archive, EEWebArchive.ArchivEERepo,
+  database: "ArchivEE.sqlite3"
