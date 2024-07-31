@@ -5,7 +5,7 @@ defmodule EEWebArchiveWeb.PageController do
     player = get_player()
     # The home page is often custom made,
     # so skip the default app layout.
-    render(conn, :home, layout: false, player: player)
+    render(conn, :home, player: player)
   end
 
   def get_player() do

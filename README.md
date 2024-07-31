@@ -1,4 +1,4 @@
-# EEWebArchive
+# EE Web Archive
 
 To start your Phoenix server:
 
