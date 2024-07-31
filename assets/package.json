@@ -1,0 +1,7 @@
+{
+  "name": "ee_web_archive",
+  "version": "1.0.0",
+  "devDependencies": {
+    "daisyui": "^4.12.10"
+  }
+}
