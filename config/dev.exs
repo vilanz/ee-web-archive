@@ -85,7 +85,5 @@ config :phoenix_live_view,
 config :swoosh, :api_client, false
 
 # Local ArchivEE database config
-config :ee_web_archive,
-  ecto_repos: [EEWebArchive.ArchivEERepo]
 config :ee_web_archive, EEWebArchive.ArchivEERepo,
   database: "ArchivEE.sqlite3"
