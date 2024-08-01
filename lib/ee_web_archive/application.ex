@@ -9,7 +9,7 @@ defmodule EEWebArchive.Application do
   def start(_type, _args) do
     children = [
       EEWebArchiveWeb.Telemetry,
-      EEWebArchive.Repo,
+      EEWebArchive.MainRepo,
       EEWebArchive.ArchivEERepo,
       {DNSCluster, query: Application.get_env(:ee_web_archive, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: EEWebArchive.PubSub},

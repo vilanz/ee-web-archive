@@ -8,7 +8,7 @@ config :bcrypt_elixir, :log_rounds, 1
 # The MIX_TEST_PARTITION environment variable can be used
 # to provide built-in test partitioning in CI environment.
 # Run `mix help test` for more information.
-config :ee_web_archive, EEWebArchive.Repo,
+config :ee_web_archive, EEWebArchive.MainRepo,
   username: "postgres",
   password: "postgres",
   hostname: "localhost",

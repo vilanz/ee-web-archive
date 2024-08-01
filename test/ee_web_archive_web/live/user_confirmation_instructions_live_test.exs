@@ -5,7 +5,7 @@ defmodule EEWebArchiveWeb.UserConfirmationInstructionsLiveTest do
   import EEWebArchive.AccountsFixtures
 
   alias EEWebArchive.Accounts
-  alias EEWebArchive.Repo
+  alias EEWebArchive.MainRepo
 
   setup do
     %{user: user_fixture()}
@@ -29,11 +29,11 @@ defmodule EEWebArchiveWeb.UserConfirmationInstructionsLiveTest do
       assert Phoenix.Flash.get(conn.assigns.flash, :info) =~
                "If your email is in our system"
 
-      assert Repo.get_by!(Accounts.UserToken, user_id: user.id).context == "confirm"
+      assert MainRepo.get_by!(Accounts.UserToken, user_id: user.id).context == "confirm"
     end
 
     test "does not send confirmation token if user is confirmed", %{conn: conn, user: user} do
-      Repo.update!(Accounts.User.confirm_changeset(user))
+      MainRepo.update!(Accounts.User.confirm_changeset(user))
 
       {:ok, lv, _html} = live(conn, ~p"/users/confirm")
 
@@ -46,7 +46,7 @@ defmodule EEWebArchiveWeb.UserConfirmationInstructionsLiveTest do
       assert Phoenix.Flash.get(conn.assigns.flash, :info) =~
                "If your email is in our system"
 
-      refute Repo.get_by(Accounts.UserToken, user_id: user.id)
+      refute MainRepo.get_by(Accounts.UserToken, user_id: user.id)
     end
 
     test "does not send confirmation token if email is invalid", %{conn: conn} do
@@ -61,7 +61,7 @@ defmodule EEWebArchiveWeb.UserConfirmationInstructionsLiveTest do
       assert Phoenix.Flash.get(conn.assigns.flash, :info) =~
                "If your email is in our system"
 
-      assert Repo.all(Accounts.UserToken) == []
+      assert MainRepo.all(Accounts.UserToken) == []
     end
   end
 end

@@ -1,11 +1,11 @@
 import Config
 
 # Configure your database
-config :ee_web_archive, EEWebArchive.Repo,
+config :ee_web_archive, EEWebArchive.MainRepo,
   username: "postgres",
   password: "postgres",
   hostname: "localhost",
-  database: "ee_web_archive_dev",
+  database: "ee_web_archive_dev_",
   stacktrace: true,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10

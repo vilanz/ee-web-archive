@@ -5,7 +5,7 @@ defmodule EEWebArchiveWeb.UserForgotPasswordLiveTest do
   import EEWebArchive.AccountsFixtures
 
   alias EEWebArchive.Accounts
-  alias EEWebArchive.Repo
+  alias EEWebArchive.MainRepo
 
   describe "Forgot password page" do
     test "renders email page", %{conn: conn} do
@@ -43,7 +43,7 @@ defmodule EEWebArchiveWeb.UserForgotPasswordLiveTest do
 
       assert Phoenix.Flash.get(conn.assigns.flash, :info) =~ "If your email is in our system"
 
-      assert Repo.get_by!(Accounts.UserToken, user_id: user.id).context ==
+      assert MainRepo.get_by!(Accounts.UserToken, user_id: user.id).context ==
                "reset_password"
     end
 
@@ -57,7 +57,7 @@ defmodule EEWebArchiveWeb.UserForgotPasswordLiveTest do
         |> follow_redirect(conn, "/")
 
       assert Phoenix.Flash.get(conn.assigns.flash, :info) =~ "If your email is in our system"
-      assert Repo.all(Accounts.UserToken) == []
+      assert MainRepo.all(Accounts.UserToken) == []
     end
   end
 end

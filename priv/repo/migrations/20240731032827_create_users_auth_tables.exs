@@ -1,4 +1,4 @@
-defmodule EEWebArchive.Repo.Migrations.CreateUsersAuthTables do
+defmodule EEWebArchive.MainRepo.Migrations.CreateUsersAuthTables do
   use Ecto.Migration
 
   def change do

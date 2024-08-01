@@ -4,7 +4,7 @@ defmodule EEWebArchive.Accounts do
   """
 
   import Ecto.Query, warn: false
-  alias EEWebArchive.Repo
+  alias EEWebArchive.MainRepo
 
   alias EEWebArchive.Accounts.{User, UserToken, UserNotifier}
 
@@ -23,7 +23,7 @@ defmodule EEWebArchive.Accounts do
 
   """
   def get_user_by_email(email) when is_binary(email) do
-    Repo.get_by(User, email: email)
+    MainRepo.get_by(User, email: email)
   end
 
   @doc """
@@ -40,7 +40,7 @@ defmodule EEWebArchive.Accounts do
   """
   def get_user_by_email_and_password(email, password)
       when is_binary(email) and is_binary(password) do
-    user = Repo.get_by(User, email: email)
+    user = MainRepo.get_by(User, email: email)
     if User.valid_password?(user, password), do: user
   end
 
@@ -58,7 +58,7 @@ defmodule EEWebArchive.Accounts do
       ** (Ecto.NoResultsError)
 
   """
-  def get_user!(id), do: Repo.get!(User, id)
+  def get_user!(id), do: MainRepo.get!(User, id)
 
   ## User registration
 
@@ -77,7 +77,7 @@ defmodule EEWebArchive.Accounts do
   def register_user(attrs) do
     %User{}
     |> User.registration_changeset(attrs)
-    |> Repo.insert()
+    |> MainRepo.insert()
   end
 
   @doc """
@@ -138,8 +138,8 @@ defmodule EEWebArchive.Accounts do
     context = "change:#{user.email}"
 
     with {:ok, query} <- UserToken.verify_change_email_token_query(token, context),
-         %UserToken{sent_to: email} <- Repo.one(query),
-         {:ok, _} <- Repo.transaction(user_email_multi(user, email, context)) do
+         %UserToken{sent_to: email} <- MainRepo.one(query),
+         {:ok, _} <- MainRepo.transaction(user_email_multi(user, email, context)) do
       :ok
     else
       _ -> :error
@@ -170,7 +170,7 @@ defmodule EEWebArchive.Accounts do
       when is_function(update_email_url_fun, 1) do
     {encoded_token, user_token} = UserToken.build_email_token(user, "change:#{current_email}")
 
-    Repo.insert!(user_token)
+    MainRepo.insert!(user_token)
     UserNotifier.deliver_update_email_instructions(user, update_email_url_fun.(encoded_token))
   end
 
@@ -208,7 +208,7 @@ defmodule EEWebArchive.Accounts do
     Ecto.Multi.new()
     |> Ecto.Multi.update(:user, changeset)
     |> Ecto.Multi.delete_all(:tokens, UserToken.by_user_and_contexts_query(user, :all))
-    |> Repo.transaction()
+    |> MainRepo.transaction()
     |> case do
       {:ok, %{user: user}} -> {:ok, user}
       {:error, :user, changeset, _} -> {:error, changeset}
@@ -222,7 +222,7 @@ defmodule EEWebArchive.Accounts do
   """
   def generate_user_session_token(user) do
     {token, user_token} = UserToken.build_session_token(user)
-    Repo.insert!(user_token)
+    MainRepo.insert!(user_token)
     token
   end
 
@@ -231,14 +231,14 @@ defmodule EEWebArchive.Accounts do
   """
   def get_user_by_session_token(token) do
     {:ok, query} = UserToken.verify_session_token_query(token)
-    Repo.one(query)
+    MainRepo.one(query)
   end
 
   @doc """
   Deletes the signed token with the given context.
   """
   def delete_user_session_token(token) do
-    Repo.delete_all(UserToken.by_token_and_context_query(token, "session"))
+    MainRepo.delete_all(UserToken.by_token_and_context_query(token, "session"))
     :ok
   end
 
@@ -262,7 +262,7 @@ defmodule EEWebArchive.Accounts do
       {:error, :already_confirmed}
     else
       {encoded_token, user_token} = UserToken.build_email_token(user, "confirm")
-      Repo.insert!(user_token)
+      MainRepo.insert!(user_token)
       UserNotifier.deliver_confirmation_instructions(user, confirmation_url_fun.(encoded_token))
     end
   end
@@ -275,8 +275,8 @@ defmodule EEWebArchive.Accounts do
   """
   def confirm_user(token) do
     with {:ok, query} <- UserToken.verify_email_token_query(token, "confirm"),
-         %User{} = user <- Repo.one(query),
-         {:ok, %{user: user}} <- Repo.transaction(confirm_user_multi(user)) do
+         %User{} = user <- MainRepo.one(query),
+         {:ok, %{user: user}} <- MainRepo.transaction(confirm_user_multi(user)) do
       {:ok, user}
     else
       _ -> :error
@@ -303,7 +303,7 @@ defmodule EEWebArchive.Accounts do
   def deliver_user_reset_password_instructions(%User{} = user, reset_password_url_fun)
       when is_function(reset_password_url_fun, 1) do
     {encoded_token, user_token} = UserToken.build_email_token(user, "reset_password")
-    Repo.insert!(user_token)
+    MainRepo.insert!(user_token)
     UserNotifier.deliver_reset_password_instructions(user, reset_password_url_fun.(encoded_token))
   end
 
@@ -321,7 +321,7 @@ defmodule EEWebArchive.Accounts do
   """
   def get_user_by_reset_password_token(token) do
     with {:ok, query} <- UserToken.verify_email_token_query(token, "reset_password"),
-         %User{} = user <- Repo.one(query) do
+         %User{} = user <- MainRepo.one(query) do
       user
     else
       _ -> nil
@@ -344,7 +344,7 @@ defmodule EEWebArchive.Accounts do
     Ecto.Multi.new()
     |> Ecto.Multi.update(:user, User.password_changeset(user, attrs))
     |> Ecto.Multi.delete_all(:tokens, UserToken.by_user_and_contexts_query(user, :all))
-    |> Repo.transaction()
+    |> MainRepo.transaction()
     |> case do
       {:ok, %{user: user}} -> {:ok, user}
       {:error, :user, changeset, _} -> {:error, changeset}

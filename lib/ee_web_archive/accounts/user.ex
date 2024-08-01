@@ -81,7 +81,7 @@ defmodule EEWebArchive.Accounts.User do
   defp maybe_validate_unique_email(changeset, opts) do
     if Keyword.get(opts, :validate_email, true) do
       changeset
-      |> unsafe_validate_unique(:email, EEWebArchive.Repo)
+      |> unsafe_validate_unique(:email, EEWebArchive.MainRepo)
       |> unique_constraint(:email)
     else
       changeset
