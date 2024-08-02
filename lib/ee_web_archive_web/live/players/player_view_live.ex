@@ -1,5 +1,5 @@
 defmodule EEWebArchiveWeb.PlayerViewLive do
-  alias EEWebArchive.ArchivEE.WorldDataParser
+  alias EEWebArchive.ArchivEE.Worlds
   alias EEWebArchive.ArchivEERepo
   use EEWebArchiveWeb, :live_view
 
@@ -29,8 +29,7 @@ defmodule EEWebArchiveWeb.PlayerViewLive do
       Players.get_by_name(name)
       |> ArchivEERepo.preload(worlds: [:data])
 
-    WorldDataParser.add(1, 2)
-    |> IO.inspect()
+    Worlds.parse_world_data(Enum.at(player.worlds, 1))
 
     {:ok, assign(socket, player: player)}
   end

@@ -1,0 +1,2 @@
+[workspace]
+members = ["native/world_data_parser"]
