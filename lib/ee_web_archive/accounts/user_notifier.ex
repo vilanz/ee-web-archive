@@ -25,7 +25,7 @@ defmodule EEWebArchive.Accounts.UserNotifier do
 
     ==============================
 
-    Hi #{user.email},
+    Hi #{user.name},
 
     You can confirm your account by visiting the URL below:
 
@@ -45,7 +45,7 @@ defmodule EEWebArchive.Accounts.UserNotifier do
 
     ==============================
 
-    Hi #{user.email},
+    Hi #{user.name},
 
     You can reset your password by visiting the URL below:
 
@@ -65,7 +65,7 @@ defmodule EEWebArchive.Accounts.UserNotifier do
 
     ==============================
 
-    Hi #{user.email},
+    Hi #{user.name},
 
     You can change your email by visiting the URL below:
 
