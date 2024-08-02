@@ -3,7 +3,7 @@ defmodule EEWebArchive.Accounts do
   The Accounts context.
   """
 
-  import Ecto.Query, warn: false
+  import Ecto.Query
   alias EEWebArchive.MainRepo
 
   alias EEWebArchive.Accounts.{User, UserToken, UserNotifier}

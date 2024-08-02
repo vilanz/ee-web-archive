@@ -80,6 +80,8 @@ defmodule EEWebArchiveWeb.Router do
       on_mount: [{EEWebArchiveWeb.UserAuth, :mount_current_user}] do
       live "/users/confirm/:token", UserConfirmationLive, :edit
       live "/users/confirm", UserConfirmationInstructionsLive, :new
+
+      live "/players/:name", PlayerViewLive, :new
     end
   end
 end

@@ -147,7 +147,7 @@ defmodule EEWebArchiveWeb.UserSettingsLive do
     user = socket.assigns.current_user
 
     case Accounts.apply_user_name(user, password, user_params) do
-      {:ok, applied_user} ->
+      {:ok} ->
         info = "Your username was changed successfully."
         {:noreply, socket |> put_flash(:info, info) |> assign(name_form_current_password: nil)}
 
