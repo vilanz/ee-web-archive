@@ -9,7 +9,7 @@ import Config
 
 config :ee_web_archive,
   namespace: EEWebArchive,
-  ecto_repos: [EEWebArchive.ArchivEERepo],
+  ecto_repos: [EEWebArchive.MainRepo],
   generators: [timestamp_type: :utc_datetime]
 
 # Configures the endpoint

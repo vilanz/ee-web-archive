@@ -32,6 +32,7 @@ defmodule EEWebArchiveWeb.UserRegistrationLive do
         </.error>
 
         <.input field={@form[:email]} type="email" label="Email" required />
+        <.input field={@form[:name]} type="text" label="Username" required />
         <.input field={@form[:password]} type="password" label="Password" required />
 
         <:actions>

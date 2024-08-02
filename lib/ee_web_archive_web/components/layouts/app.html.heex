@@ -8,38 +8,29 @@
         EE Web Archive
       </h1>
     </div>
-    <div class="flex items-center gap-4 font-semibold leading-6 text-900">
+    <div class="flex items-center gap-4 font-semibold text-900">
       <%= if @current_user do %>
-        <p class="text-[0.8125rem] leading-6 text-900">
-          <%= @current_user.email %>
+        <p>
+          Hi, <%= @current_user.name %>!
         </p>
         <p>
-          <.link
-            href={~p"/users/settings"}
-          >
+          <.link href={~p"/users/settings"}>
             Settings
           </.link>
         </p>
         <p>
-          <.link
-            href={~p"/users/log_out"}
-            method="delete"
-          >
+          <.link href={~p"/users/log_out"} method="delete">
             Log out
           </.link>
         </p>
       <% else %>
         <p>
-          <.link
-            href={~p"/users/register"}
-          >
+          <.link href={~p"/users/register"}>
             Register
           </.link>
         </p>
         <p>
-          <.link
-            href={~p"/users/log_in"}
-          >
+          <.link href={~p"/users/log_in"}>
             Log in
           </.link>
         </p>

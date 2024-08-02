@@ -202,7 +202,7 @@ defmodule EEWebArchiveWeb.CoreComponents do
   def simple_form(assigns) do
     ~H"""
     <.form :let={f} for={@for} as={@as} {@rest}>
-      <div class="mt-10 space-y-8">
+      <div class="mt-2 space-y-4">
         <%= render_slot(@inner_block, f) %>
         <div :for={action <- @actions} class="mt-2 flex items-center justify-between gap-6">
           <%= render_slot(action, f) %>
@@ -318,7 +318,7 @@ defmodule EEWebArchiveWeb.CoreComponents do
           name={@name}
           value="true"
           checked={@checked}
-          class="rounded border-zinc-300 text-900 focus:ring-0"
+          class="checkbox"
           {@rest}
         />
         <%= @label %>
@@ -332,13 +332,7 @@ defmodule EEWebArchiveWeb.CoreComponents do
     ~H"""
     <div>
       <.label for={@id}><%= @label %></.label>
-      <select
-        id={@id}
-        name={@name}
-        class="mt-2 block w-full rounded-md border border-gray-300 bg-white shadow-sm focus:border-zinc-400 focus:ring-0 sm:text-sm"
-        multiple={@multiple}
-        {@rest}
-      >
+      <select id={@id} name={@name} class="input" multiple={@multiple} {@rest}>
         <option :if={@prompt} value=""><%= @prompt %></option>
         <%= Phoenix.HTML.Form.options_for_select(@options, @value) %>
       </select>
@@ -355,8 +349,7 @@ defmodule EEWebArchiveWeb.CoreComponents do
         id={@id}
         name={@name}
         class={[
-          "mt-2 block w-full rounded-lg text-900 focus:ring-0 sm:text-sm sm:leading-6 min-h-[6rem]",
-          @errors == [] && "border-zinc-300 focus:border-zinc-400",
+          "input input-bordered w-full",
           @errors != [] && "border-rose-400 focus:border-rose-400"
         ]}
         {@rest}
@@ -377,8 +370,7 @@ defmodule EEWebArchiveWeb.CoreComponents do
         id={@id}
         value={Phoenix.HTML.Form.normalize_value(@type, @value)}
         class={[
-          "mt-2 block w-full rounded-lg text-900 focus:ring-0 sm:text-sm sm:leading-6",
-          @errors == [] && "border-zinc-300 focus:border-zinc-400",
+          "input input-bordered w-full",
           @errors != [] && "border-rose-400 focus:border-rose-400"
         ]}
         {@rest}
@@ -396,9 +388,11 @@ defmodule EEWebArchiveWeb.CoreComponents do
 
   def label(assigns) do
     ~H"""
-    <label for={@for} class="block text-sm font-semibold leading-6 text-800">
-      <%= render_slot(@inner_block) %>
-    </label>
+    <div class="label pt-0">
+      <label for={@for} class="label-text">
+        <%= render_slot(@inner_block) %>
+      </label>
+    </div>
     """
   end
 
@@ -559,10 +553,7 @@ defmodule EEWebArchiveWeb.CoreComponents do
   def back(assigns) do
     ~H"""
     <div class="mt-16">
-      <.link
-        navigate={@navigate}
-        class="text-sm font-semibold leading-6 text-900 hover:text-700"
-      >
+      <.link navigate={@navigate} class="text-sm font-semibold leading-6 text-900 hover:text-700">
         <.icon name="hero-arrow-left-solid" class="h-3 w-3" />
         <%= render_slot(@inner_block) %>
       </.link>

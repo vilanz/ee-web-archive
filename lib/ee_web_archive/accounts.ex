@@ -44,6 +44,12 @@ defmodule EEWebArchive.Accounts do
     if User.valid_password?(user, password), do: user
   end
 
+  def get_user_by_name_and_password(name, password)
+      when is_binary(name) and is_binary(password) do
+    user = MainRepo.get_by(User, name: name)
+    if User.valid_password?(user, password), do: user
+  end
+
   @doc """
   Gets a single user.
 
@@ -90,7 +96,22 @@ defmodule EEWebArchive.Accounts do
 
   """
   def change_user_registration(%User{} = user, attrs \\ %{}) do
-    User.registration_changeset(user, attrs, hash_password: false, validate_email: false)
+    User.registration_changeset(user, attrs,
+      hash_password: false,
+      validate_email: false,
+      validate_name: false
+    )
+  end
+
+  def change_user_name(user, attrs \\ %{}) do
+    User.name_changeset(user, attrs, validate_name: false)
+  end
+
+  def apply_user_name(user, password, attrs) do
+    user
+    |> User.name_changeset(attrs)
+    |> User.validate_current_password(password)
+    |> Ecto.Changeset.apply_action(:update)
   end
 
   ## Settings

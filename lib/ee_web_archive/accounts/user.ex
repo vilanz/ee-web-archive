@@ -4,6 +4,7 @@ defmodule EEWebArchive.Accounts.User do
 
   schema "users" do
     field :email, :string
+    field :name, :string
     field :password, :string, virtual: true, redact: true
     field :hashed_password, :string, redact: true
     field :current_password, :string, virtual: true, redact: true
@@ -35,12 +36,19 @@ defmodule EEWebArchive.Accounts.User do
       using this changeset for validations on a LiveView form before
       submitting the form), this option can be set to `false`.
       Defaults to `true`.
+
+    * `:validate_name` - Validates the uniqueness of the name, in case
+      you don't want to validate the uniqueness of the name (like when
+      using this changeset for validations on a LiveView form before
+      submitting the form), this option can be set to `false`.
+      Defaults to `true`.
   """
   def registration_changeset(user, attrs, opts \\ []) do
     user
-    |> cast(attrs, [:email, :password, :role])
+    |> cast(attrs, [:email, :password, :role, :name])
     |> validate_email(opts)
     |> validate_password(opts)
+    |> validate_name(opts)
   end
 
   defp validate_email(changeset, opts) do
@@ -54,12 +62,19 @@ defmodule EEWebArchive.Accounts.User do
   defp validate_password(changeset, opts) do
     changeset
     |> validate_required([:password])
-    |> validate_length(:password, min: 12, max: 72)
+    |> validate_length(:password, min: 3, max: 72)
     # Examples of additional password validation:
     # |> validate_format(:password, ~r/[a-z]/, message: "at least one lower case character")
     # |> validate_format(:password, ~r/[A-Z]/, message: "at least one upper case character")
     # |> validate_format(:password, ~r/[!?@#$%^&*_0-9]/, message: "at least one digit or punctuation character")
     |> maybe_hash_password(opts)
+  end
+
+  defp validate_name(changeset, opts) do
+    changeset
+    |> validate_required([:name])
+    |> validate_length(:name, min: 3, max: 20)
+    |> maybe_validate_unique_name(opts)
   end
 
   defp maybe_hash_password(changeset, opts) do
@@ -89,6 +104,16 @@ defmodule EEWebArchive.Accounts.User do
     end
   end
 
+  defp maybe_validate_unique_name(changeset, opts) do
+    if Keyword.get(opts, :validate_name, true) do
+      changeset
+      |> unsafe_validate_unique(:name, EEWebArchive.MainRepo)
+      |> unique_constraint(:name)
+    else
+      changeset
+    end
+  end
+
   @doc """
   A user changeset for changing the email.
 
@@ -101,6 +126,16 @@ defmodule EEWebArchive.Accounts.User do
     |> case do
       %{changes: %{email: _}} = changeset -> changeset
       %{} = changeset -> add_error(changeset, :email, "did not change")
+    end
+  end
+
+  def name_changeset(user, attrs, opts \\ []) do
+    user
+    |> cast(attrs, [:name])
+    |> validate_name(opts)
+    |> case do
+      %{changes: %{name: _}} = changeset -> changeset
+      %{} = changeset -> add_error(changeset, :name, "did not change")
     end
   end
 
