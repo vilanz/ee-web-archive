@@ -60,7 +60,8 @@ defmodule EEWebArchive.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.5"},
-      {:ecto_sqlite3, "~> 0.16"}
+      {:ecto_sqlite3, "~> 0.16"},
+      {:rustler, "~> 0.34"}
     ]
   end
 

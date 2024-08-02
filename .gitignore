@@ -39,3 +39,6 @@ ee_web_archive-*.tar
 # In case you use Node.js/npm, you want to ignore these.
 npm-debug.log
 /assets/node_modules/
+
+# Ignore Rust interop native stuff
+/priv/native/
