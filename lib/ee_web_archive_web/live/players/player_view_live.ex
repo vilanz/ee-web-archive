@@ -1,4 +1,5 @@
 defmodule EEWebArchiveWeb.PlayerViewLive do
+  alias EEWebArchive.ArchivEERepo
   use EEWebArchiveWeb, :live_view
 
   alias EEWebArchive.ArchivEE.Players
@@ -14,12 +15,20 @@ defmodule EEWebArchiveWeb.PlayerViewLive do
     <div>
       Last login: <%= @player.last_login %>
     </div>
+    <%= for world <- @player.worlds do %>
+      <span>
+        <%= world.name %> ::
+      </span>
+    <% end %>
     """
   end
 
   def mount(%{"name" => name}, _session, socket) do
-    player = Players.get_by_name(name)
-    IO.inspect(player)
+    player =
+      Players.get_by_name(name)
+      |> ArchivEERepo.preload(:worlds)
+      |> IO.inspect()
+
     {:ok, assign(socket, player: player)}
   end
 end
