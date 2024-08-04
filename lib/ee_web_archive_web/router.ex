@@ -82,6 +82,8 @@ defmodule EEWebArchiveWeb.Router do
       live "/users/confirm", UserConfirmationInstructionsLive, :new
 
       live "/players/:name", PlayerViewLive, :new
+      live "/crews/:id", CrewViewLive, :new
+      live "/worlds/:id", WorldViewLive, :new
     end
   end
 end

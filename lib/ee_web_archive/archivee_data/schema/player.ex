@@ -13,6 +13,10 @@ defmodule EEWebArchive.ArchivEE.Player do
 
     has_many :worlds, ArchivEE.World, foreign_key: :owner
 
+    many_to_many :crews, ArchivEE.Crew,
+      join_through: "crew_member",
+      join_keys: [player: :rowid, crew: :rowid]
+
     many_to_many :friends, ArchivEE.Player,
       join_through: "player_friend",
       join_keys: [player_1: :rowid, player_2: :rowid]

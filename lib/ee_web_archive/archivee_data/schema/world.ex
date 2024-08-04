@@ -17,9 +17,12 @@ defmodule EEWebArchive.ArchivEE.World do
     field :minimap, :boolean
     field :empty, :boolean
 
-    belongs_to :player, ArchivEE.World, foreign_key: :owner, references: :rowid
-
     field :data_ref, :integer
     has_one :data_entity, ArchivEE.WorldData, foreign_key: :rowid, references: :data_ref
+
+    belongs_to :owning_player, ArchivEE.Player, foreign_key: :owner, references: :rowid
+
+    belongs_to :owning_crew, ArchivEE.Crew, foreign_key: :crew, references: :rowid
+    field :crew_status, :integer
   end
 end

@@ -1,7 +1,7 @@
 defmodule EEWebArchiveWeb.PlayerViewLive do
-  alias EEWebArchive.ArchivEE.Worlds
   use EEWebArchiveWeb, :live_view
 
+  alias EEWebArchive.ArchivEE.Worlds
   alias EEWebArchive.ArchivEE.Players
 
   def render(assigns) do
@@ -17,18 +17,17 @@ defmodule EEWebArchiveWeb.PlayerViewLive do
         Last login: <%= @player.last_login %>
       </div>
       <h1>Friends</h1>
-      <%= for friend <- @player.friends do %>
-        <a class="link" href={~p"/players/#{friend.name}"}>
-          <%= friend.name %>
-        </a>
-        ::
-      <% end %>
+      <.link :for={friend <- @player.friends} class="link" navigate={~p"/players/#{friend.name}"}>
+        <%= friend.name %>
+      </.link>
       <h1>Worlds</h1>
-      <%= for world <- @player.worlds do %>
-        <span>
-          <%= world.name %> ::
-        </span>
-      <% end %>
+      <.link :for={world <- @player.worlds} class="link" navigate={~p"/worlds/#{world.id}"}>
+        <%= world.name %>
+      </.link>
+      <h1>Crews</h1>
+      <.link :for={crew <- @player.crews} class="link" navigate={~p"/crews/#{crew.id}"}>
+        <%= crew.name %> <span :if={crew.owner == @player.rowid}>(owner)</span> ::
+      </.link>
     </div>
     """
   end
@@ -38,6 +37,7 @@ defmodule EEWebArchiveWeb.PlayerViewLive do
       Players.get_by_name(name)
       |> Players.preload_worlds()
       |> Players.preload_friends()
+      |> Players.preload_crews()
 
     Worlds.parse_world_data(Enum.at(player.worlds, 1))
 
