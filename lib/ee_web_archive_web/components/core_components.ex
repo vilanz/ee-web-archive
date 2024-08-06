@@ -202,11 +202,9 @@ defmodule EEWebArchiveWeb.CoreComponents do
   def simple_form(assigns) do
     ~H"""
     <.form :let={f} for={@for} as={@as} {@rest}>
-      <div class="mt-2 space-y-4">
-        <%= render_slot(@inner_block, f) %>
-        <div :for={action <- @actions} class="mt-2 flex items-center justify-between gap-6">
-          <%= render_slot(action, f) %>
-        </div>
+      <%= render_slot(@inner_block, f) %>
+      <div :for={action <- @actions} class="my-6 flex items-center justify-between gap-6">
+        <%= render_slot(action, f) %>
       </div>
     </.form>
     """
@@ -231,8 +229,7 @@ defmodule EEWebArchiveWeb.CoreComponents do
     <button
       type={@type}
       class={[
-        "phx-submit-loading:opacity-75 rounded-lg bg-zinc-900 hover:bg-zinc-700 py-2 px-3",
-        "text-sm font-semibold leading-6 text-white active:text-white/80",
+        "phx-submit-loading:opacity-75 btn",
         @class
       ]}
       {@rest}
@@ -310,7 +307,7 @@ defmodule EEWebArchiveWeb.CoreComponents do
 
     ~H"""
     <div>
-      <label class="flex items-center gap-4 text-sm leading-6 text-600">
+      <label class="flex items-center gap-2 text-sm leading-6 text-600">
         <input type="hidden" name={@name} value="false" disabled={@rest[:disabled]} />
         <input
           type="checkbox"
@@ -388,8 +385,8 @@ defmodule EEWebArchiveWeb.CoreComponents do
 
   def label(assigns) do
     ~H"""
-    <div class="label pt-0">
-      <label for={@for} class="label-text">
+    <div class="label pt-2">
+      <label for={@for} class="text-md">
         <%= render_slot(@inner_block) %>
       </label>
     </div>
@@ -423,10 +420,10 @@ defmodule EEWebArchiveWeb.CoreComponents do
     ~H"""
     <header class={[@actions != [] && "flex items-center justify-between gap-6", @class]}>
       <div>
-        <h1 class="text-lg font-semibold leading-8 text-800">
+        <h2>
           <%= render_slot(@inner_block) %>
-        </h1>
-        <p :if={@subtitle != []} class="mt-2 text-sm leading-6 text-600">
+        </h2>
+        <p :if={@subtitle != []}>
           <%= render_slot(@subtitle) %>
         </p>
       </div>

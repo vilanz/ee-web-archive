@@ -1,52 +1,49 @@
-<header class="pt-4 px-4">
-  <div class="flex items-center justify-between pb-2 border-b">
-    <div class="flex items-center gap-4">
-      <a href="/">
-        <img src={~p"/images/elgato.png"} />
-      </a>
-      <h1 class="text-3xl">
-        EE Web Archive
-      </h1>
+<div class="flex flex-col items-center w-full h-full">
+  <header class="flex items-center justify-between bg-base-200 font-bold w-full px-[400px] py-2">
+    <h1>
+      EE Web Archive
+    </h1>
+    <div class="flex items-center gap-8">
+      <.menu_link>Players</.menu_link>
+      <.menu_link>Worlds</.menu_link>
     </div>
-    <div class="flex items-center gap-4 font-semibold text-900">
+
+    <div class="flex items-center gap-8">
       <%= if @current_user do %>
         <p>
           Hi, <%= @current_user.name %>!
         </p>
-        <p>
-          <.link href={~p"/users/settings"}>
-            Settings
-          </.link>
-        </p>
-        <p>
-          <.link href={~p"/users/log_out"} method="delete">
-            Log out
-          </.link>
-        </p>
+        <.menu_link href={~p"/users/settings"}>
+          Settings
+        </.menu_link>
+        <.menu_link href={~p"/users/log_out"} method="delete">
+          Log out
+        </.menu_link>
       <% else %>
-        <p>
-          <.link href={~p"/users/register"}>
-            Register
-          </.link>
-        </p>
-        <p>
-          <.link href={~p"/users/log_in"}>
-            Log in
-          </.link>
-        </p>
+        <.menu_link href={~p"/users/register"}>
+          Register
+        </.menu_link>
+        <.menu_link href={~p"/users/log_in"}>
+          Log in
+        </.menu_link>
       <% end %>
-      <a href="https://forums.everybodyedits.com/viewtopic.php?id=47779" class="hover:text-700">
+      <.menu_link href="https://forums.everybodyedits.com/viewtopic.php?id=47779" target="_blank">
         Forum thread
-      </a>
-      <a href="https://github.com/vilanz/ee-web-archive" class="hover:text-700">
-        GitHub
-      </a>
+      </.menu_link>
+      <.menu_link
+        href="https://github.com/vilanz/ee-web-archive"
+        target="_blank"
+        class="flex items-center gap-1"
+      >
+        <img src={~p"/images/github.svg"} class="opacity-75" width="20" />
+        <span>
+          GitHub
+        </span>
+      </.menu_link>
     </div>
-  </div>
-</header>
-<main class="pt-4 px-4">
-  <div class="mx-auto max-w-2xl">
-    <.flash_group flash={@flash} />
+  </header>
+  <.flash_group flash={@flash} />
+  <main class="p-6">
     <%= @inner_content %>
-  </div>
-</main>
+  </main>
+</div>

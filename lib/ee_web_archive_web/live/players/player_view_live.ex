@@ -6,28 +6,32 @@ defmodule EEWebArchiveWeb.PlayerViewLive do
 
   def render(assigns) do
     ~H"""
-    <div class="prose">
-      <div>
-        Name: <%= @player.name %>
+    <div class="flex">
+      <div class="basis-[350px] shrink-0">
+        <h2>
+          <%= @player.name %>
+        </h2>
+        <h3>
+          Created: <%= @player.created %>
+        </h3>
+        <h3>
+          Last login: <%= @player.last_login %>
+        </h3>
+        <h2>Crews</h2>
+        <div class="flex flex-wrap gap-2">
+          <.crew_link :for={crew <- @player.crews} crew={crew} />
+        </div>
+        <h2>Friends</h2>
+        <div class="flex flex-wrap gap-2">
+          <.player_link :for={friend <- @player.friends} player={friend} />
+        </div>
       </div>
       <div>
-        Created: <%= @player.created %>
+        <h1>Worlds</h1>
+        <div class="flex flex-wrap justify-around gap-6 mt-4">
+          <.world_card :for={world <- @player.worlds} world={world} />
+        </div>
       </div>
-      <div>
-        Last login: <%= @player.last_login %>
-      </div>
-      <h1>Friends</h1>
-      <.link :for={friend <- @player.friends} class="link" navigate={~p"/players/#{friend.name}"}>
-        <%= friend.name %>
-      </.link>
-      <h1>Worlds</h1>
-      <.link :for={world <- @player.worlds} class="link" navigate={~p"/worlds/#{world.id}"}>
-        <%= world.name %>
-      </.link>
-      <h1>Crews</h1>
-      <.link :for={crew <- @player.crews} class="link" navigate={~p"/crews/#{crew.id}"}>
-        <%= crew.name %> <span :if={crew.owner == @player.rowid}>(owner)</span> ::
-      </.link>
     </div>
     """
   end

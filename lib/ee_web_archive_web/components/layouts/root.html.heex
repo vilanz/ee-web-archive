@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="[scrollbar-gutter:stable]">
+<html lang="en" class="h-full w-full [scrollbar-gutter:stable]">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -8,11 +8,16 @@
       <%= assigns[:page_title] || "Home" %>
     </.live_title>
     <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
-    <link rel="icon" type="image/png" href={~p"/images/elgato.png"}>
+    <link rel="icon" type="image/png" href={~p"/images/elgato.png"} />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css"
+    />
     <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
     </script>
   </head>
-  <body>
+  <body class="h-full w-full max-w-full">
     <%= @inner_content %>
   </body>
 </html>

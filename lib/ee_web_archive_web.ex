@@ -52,6 +52,7 @@ defmodule EEWebArchiveWeb do
   def live_view do
     quote do
       use Phoenix.LiveView,
+        container: {:div, class: "h-full w-full"},
         layout: {EEWebArchiveWeb.Layouts, :app}
 
       unquote(html_helpers())
@@ -86,6 +87,9 @@ defmodule EEWebArchiveWeb do
       # Core UI components and translation
       import EEWebArchiveWeb.CoreComponents
       import EEWebArchiveWeb.Gettext
+
+      # _Our_ components
+      import EEWebArchiveWeb.Components
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS
