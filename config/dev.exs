@@ -86,4 +86,5 @@ config :swoosh, :api_client, false
 
 # Local ArchivEE database config
 config :ee_web_archive, EEWebArchive.ArchivEERepo,
-  database: "ArchivEE.sqlite3"
+  database: "./priv/sqlite/ArchivEE.sqlite3",
+  load_extensions: ["./priv/sqlite/libsqlite_zstd.so"]

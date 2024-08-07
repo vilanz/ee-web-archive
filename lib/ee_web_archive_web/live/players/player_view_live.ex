@@ -43,7 +43,7 @@ defmodule EEWebArchiveWeb.PlayerViewLive do
       |> Players.preload_friends()
       |> Players.preload_crews()
 
-    Worlds.parse_world_data(Enum.at(player.worlds, 1))
+    Worlds.parse_worlds_data(player.worlds)
 
     {:ok, assign(socket, player: player)}
   end
