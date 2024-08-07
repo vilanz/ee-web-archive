@@ -1,4 +1,5 @@
 defmodule EEWebArchive.ArchivEE.Worlds do
+  alias EEWebArchive.EELVL.Parser
   alias EEWebArchive.ArchivEERepo
   alias EEWebArchive.ArchivEE.World
 
@@ -30,10 +31,8 @@ defmodule EEWebArchive.ArchivEE.Worlds do
         world_rowids
       )
 
-    Enum.each(List.flatten(rows), fn data -> byte_size(data) |> IO.inspect() end)
-  end
-
-  def parse_world_data(_invalid_world_data) do
-    "lol invalid world"
+    Enum.each(List.flatten(rows), fn data ->
+      Parser.parse_world_data(data)
+    end)
   end
 end
