@@ -1,6 +1,7 @@
 defmodule EEWebArchive.ArchivEE.ArchivEEWorldParser do
+  alias EEWebArchive.ArchivEE.Parser.BlockColor
   alias EEWebArchive.ArchivEE.BlockType
-  alias EEWebArchive.ArchivEE.StringReader
+  alias EEWebArchive.ArchivEE.ByteReader
 
   def parse_world_data("") do
     nil
@@ -17,42 +18,38 @@ defmodule EEWebArchive.ArchivEE.ArchivEEWorldParser do
   Recursively parses blocks in the binary ArchivEE world format, appending to the list passed as its 2nd argument.
   """
   defp parse_blocks(
-         <<block_id::integer-32, layer::integer-32, xs_length::unsigned-32,
-           xs_positions::binary-size(xs_length), ys_length::unsigned-32,
-           ys_positions::binary-size(ys_length), rest_of_data::binary>>,
-         accumulator
+         <<block_id::integer-32, layer::integer-32, rest::binary>>,
+         accum
        ) do
-    block_type = BlockType.get(block_id)
+    {xs_positions, rest} = ByteReader.read_ushort_array(rest)
+    {ys_positions, rest} = ByteReader.read_ushort_array(rest)
+    positions = parse_block_xy_positions(xs_positions, ys_positions)
 
-    read_and_ignore_block_type(block_type, rest_of_data)
+    block_type = BlockType.get(block_id)
+    read_and_ignore_block_type(block_type, rest)
+
+    block_color = BlockColor.get(block_id)
 
     block = %{
       block_id: block_id,
       layer: layer,
-      positions: parse_block_x_or_y_positions(xs_positions, ys_positions)
+      block_color: block_color,
+      positions: positions
     }
 
-    [block | parse_blocks(rest_of_data, accumulator)]
+    IO.inspect(block)
+    IO.inspect(rest)
+
+    [block | parse_blocks(rest, accum)]
   end
 
-  defp parse_blocks(empty_data, accumulator) when empty_data == "" do
-    accumulator
+  defp parse_blocks(empty_data, accum) when empty_data == "" do
+    accum
   end
 
-  defp parse_block_x_or_y_positions(xs_positions, ys_positions) do
-    parse_positions(xs_positions)
-    |> Enum.zip(parse_positions(ys_positions))
-    |> Enum.map(fn {x, y} -> {x, y} end)
-  end
-
-  defp parse_positions(positions) do
-    positions
-    |> :erlang.bitstring_to_list()
-    |> Enum.chunk_every(2)
-    |> Enum.map(fn [high, low] ->
-      <<ushort::16>> = <<high::8, low::8>>
-      ushort
-    end)
+  defp parse_block_xy_positions(xs_positions, ys_positions) do
+    xs_positions
+    |> Enum.zip(ys_positions)
   end
 
   defp read_and_ignore_block_type(block_type, data) do
@@ -69,21 +66,21 @@ defmodule EEWebArchive.ArchivEE.ArchivEEWorldParser do
         data
 
       block_type in [:sign, :world_portal] ->
-        {_whatever, data} = StringReader.read(data)
-        <<_::integer-32, data>> = data
+        {_, data} = ByteReader.read_utf8_string(data)
+        <<_::integer-32, data::binary>> = data
         data
 
       block_type == :label ->
-        {_whatever, data} = StringReader.read(data)
-        {_whatever, data} = StringReader.read(data)
-        <<_::integer-32, data>> = data
+        {_, data} = ByteReader.read_utf8_string(data)
+        {_, data} = ByteReader.read_utf8_string(data)
+        <<_::integer-32, data::binary>> = data
         data
 
       block_type == :npc ->
-        {_whatever, data} = StringReader.read(data)
-        {_whatever, data} = StringReader.read(data)
-        {_whatever, data} = StringReader.read(data)
-        {_whatever, data} = StringReader.read(data)
+        {_, data} = ByteReader.read_utf8_string(data)
+        {_, data} = ByteReader.read_utf8_string(data)
+        {_, data} = ByteReader.read_utf8_string(data)
+        {_, data} = ByteReader.read_utf8_string(data)
         data
 
       true ->

@@ -61,7 +61,8 @@ defmodule EEWebArchive.MixProject do
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.5"},
       {:ecto_sqlite3, "~> 0.16"},
-      {:rustler, "~> 0.34"}
+      {:rustler, "~> 0.34"},
+      {:csv, "~> 3.2"}
     ]
   end
 
