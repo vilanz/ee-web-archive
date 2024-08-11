@@ -1,5 +1,5 @@
 defmodule EEWebArchive.ArchivEE.Worlds do
-  alias EEWebArchive.EELVL.Parser
+  alias EEWebArchive.ArchivEE.ArchivEEWorldParser
   alias EEWebArchive.ArchivEERepo
   alias EEWebArchive.ArchivEE.World
 
@@ -32,7 +32,7 @@ defmodule EEWebArchive.ArchivEE.Worlds do
       )
 
     Enum.each(List.flatten(rows), fn data ->
-      Parser.parse_world_data(data)
+      ArchivEEWorldParser.parse(data)
     end)
   end
 end
