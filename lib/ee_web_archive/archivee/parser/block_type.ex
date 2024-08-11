@@ -174,7 +174,7 @@ defmodule EEWebArchive.ArchivEE.BlockType do
     1576,
     1577,
     1578,
-    157
+    1579
   ]
 
   def get(block_id) when block_id in @morphable_blocks, do: :morphable
