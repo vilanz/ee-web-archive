@@ -14,9 +14,6 @@ defmodule EEWebArchive.ArchivEE.ArchivEEWorldParser do
     |> IO.inspect(charlists: :as_lists)
   end
 
-  @doc """
-  Recursively parses blocks in the binary ArchivEE world format, appending to the list passed as its 2nd argument.
-  """
   defp parse_blocks(
          <<block_id::integer-32, layer::integer-32, rest::binary>>,
          accum
@@ -26,7 +23,7 @@ defmodule EEWebArchive.ArchivEE.ArchivEEWorldParser do
     positions = parse_block_xy_positions(xs_positions, ys_positions)
 
     block_type = BlockType.get(block_id)
-    read_and_ignore_block_type(block_type, rest)
+    rest = read_and_ignore_block_type(block_type, rest)
 
     block_color = BlockColor.get(block_id)
 
@@ -36,9 +33,6 @@ defmodule EEWebArchive.ArchivEE.ArchivEEWorldParser do
       block_color: block_color,
       positions: positions
     }
-
-    IO.inspect(block)
-    IO.inspect(rest)
 
     [block | parse_blocks(rest, accum)]
   end
