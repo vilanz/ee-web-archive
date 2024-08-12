@@ -25,6 +25,8 @@ defmodule EEWebArchiveWeb.Endpoint do
     gzip: false,
     only: EEWebArchiveWeb.static_paths()
 
+  plug Plug.Static, at: "/uploads", from: "/srv/ee-web-archive"
+
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
   if code_reloading? do

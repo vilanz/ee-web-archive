@@ -17,7 +17,7 @@ defmodule EEWebArchive.ArchivEE.MinimapPainter do
         end)
       end)
 
-    path = "./priv/minimaps/#{id}.png"
+    path = "/srv/ee-web-archive/archivee-minimaps/#{id}.png"
 
     Image.to_file(image, path)
   end
