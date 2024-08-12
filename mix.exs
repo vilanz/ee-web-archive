@@ -62,7 +62,8 @@ defmodule EEWebArchive.MixProject do
       {:bandit, "~> 1.5"},
       {:ecto_sqlite3, "~> 0.16"},
       {:rustler, "~> 0.34"},
-      {:csv, "~> 3.2"}
+      {:csv, "~> 3.2"},
+      {:ex_png, "~> 1.0"}
     ]
   end
 

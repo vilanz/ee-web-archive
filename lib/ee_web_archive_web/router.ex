@@ -14,6 +14,12 @@ defmodule EEWebArchiveWeb.Router do
   end
 
   pipeline :api do
+    plug :accepts, ["image/bmp"]
+
+    get "/", MinimapController, :index
+  end
+
+  pipeline :api do
     plug :accepts, ["json"]
   end
 

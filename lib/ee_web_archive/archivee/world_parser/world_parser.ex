@@ -1,4 +1,4 @@
-defmodule EEWebArchive.ArchivEE.ArchivEEWorldParser do
+defmodule EEWebArchive.ArchivEE.WorldParser do
   alias EEWebArchive.ArchivEE.Parser.BlockColor
   alias EEWebArchive.ArchivEE.BlockType
   alias EEWebArchive.ArchivEE.ByteReader
@@ -8,10 +8,8 @@ defmodule EEWebArchive.ArchivEE.ArchivEEWorldParser do
   end
 
   def parse(world_data) when is_bitstring(world_data) do
-    IO.inspect(world_data)
-
     parse_blocks(world_data, [])
-    |> IO.inspect(charlists: :as_lists)
+    |> Enum.sort_by(&{&1.layer}, :desc)
   end
 
   defp parse_blocks(
@@ -27,14 +25,16 @@ defmodule EEWebArchive.ArchivEE.ArchivEEWorldParser do
 
     block_color = BlockColor.get(block_id)
 
+    {_r, _g, _b, a} = block_color
+
     block = %{
-      block_id: block_id,
+      id: block_id,
       layer: layer,
-      block_color: block_color,
+      color: block_color,
       positions: positions
     }
 
-    [block | parse_blocks(rest, accum)]
+    [block] ++ parse_blocks(rest, accum)
   end
 
   defp parse_blocks(empty_data, accum) when empty_data == "" do

@@ -1,6 +1,5 @@
 defmodule EEWebArchive.ArchivEE.ByteReader do
   def read_utf8_string(<<length::unsigned-16, bin_string::binary-size(length), rest::binary>>) do
-    IO.inspect(bin_string, label: "bin_string")
     {bin_string, rest}
   end
 

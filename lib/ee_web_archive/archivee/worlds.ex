@@ -1,7 +1,8 @@
 defmodule EEWebArchive.ArchivEE.Worlds do
-  alias EEWebArchive.ArchivEE.ArchivEEWorldParser
   alias EEWebArchive.ArchivEERepo
   alias EEWebArchive.ArchivEE.World
+  alias EEWebArchive.ArchivEE.WorldParser
+  alias EEWebArchive.ArchivEE.MinimapPainter
 
   def get_by_id(id) do
     ArchivEERepo.get_by(World, id: id)
@@ -23,7 +24,7 @@ defmodule EEWebArchive.ArchivEE.Worlds do
     %{rows: rows} =
       ArchivEERepo.query!(
         """
-          SELECT zstd_decompress(d.data, false, 1, true)
+          SELECT zstd_decompress(d.data, false, 1, true), width, height, id
           FROM world w
           JOIN _world_data_zstd d ON w.data_ref = d.rowid
           WHERE w.rowid IN (#{sql_world_rowids_in})
@@ -31,8 +32,9 @@ defmodule EEWebArchive.ArchivEE.Worlds do
         world_rowids
       )
 
-    Enum.each(List.flatten(rows), fn data ->
-      ArchivEEWorldParser.parse(data)
+    Enum.each(rows, fn [data, width, height, id] ->
+      block_data = WorldParser.parse(data)
+      MinimapPainter.paint(block_data, width, height, id)
     end)
   end
 end

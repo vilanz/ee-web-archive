@@ -13,8 +13,6 @@ defmodule EEWebArchive.ArchivEE.Parser.BlockColor do
                   )
                 end)
 
-  IO.inspect(@block_colors, label: "el block")
-
   def get(block_id) do
     Map.get(@block_colors, block_id)
   end
