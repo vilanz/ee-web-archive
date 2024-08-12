@@ -10,6 +10,7 @@ defmodule EEWebArchive.ArchivEE.WorldParser do
   def parse(world_data) when is_bitstring(world_data) do
     parse_blocks(world_data, [])
     |> Enum.sort_by(&{&1.layer}, :desc)
+    |> Enum.filter(&{elem(&1.color, 3) == 255})
   end
 
   defp parse_blocks(
@@ -24,8 +25,6 @@ defmodule EEWebArchive.ArchivEE.WorldParser do
     rest = read_and_ignore_block_type(block_type, rest)
 
     block_color = BlockColor.get(block_id)
-
-    {_r, _g, _b, a} = block_color
 
     block = %{
       id: block_id,

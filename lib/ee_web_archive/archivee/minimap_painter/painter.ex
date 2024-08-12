@@ -7,24 +7,18 @@ defmodule EEWebArchive.ArchivEE.MinimapPainter do
 
     image =
       Enum.reduce(block_list, image, fn block, acc_image ->
-        paint_block(acc_image, block)
+        {r, g, b, _a} = block.color
+
+        color =
+          Color.rgb(r, g, b)
+
+        Enum.reduce(block.positions, acc_image, fn {x, y}, acc_image ->
+          Image.Drawing.draw(acc_image, {x, y}, color)
+        end)
       end)
 
     path = "./priv/minimaps/#{id}.png"
 
     Image.to_file(image, path)
-  end
-
-  @spec paint_block(Image.t(), any()) :: Image.t()
-  defp paint_block(image, block) do
-    {r, g, b, _a} = block.color
-    IO.inspect("aaa")
-
-    color =
-      Color.rgb(r, g, b)
-
-    Enum.reduce(block.positions, image, fn {x, y}, acc_image ->
-      Image.Drawing.draw(acc_image, {x, y}, color)
-    end)
   end
 end
