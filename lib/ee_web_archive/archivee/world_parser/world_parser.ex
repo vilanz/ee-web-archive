@@ -10,7 +10,6 @@ defmodule EEWebArchive.ArchivEE.WorldParser do
   def parse(world_data) when is_bitstring(world_data) do
     parse_blocks(world_data, [])
     |> Enum.sort_by(&{&1.layer}, :desc)
-    |> Enum.filter(&{elem(&1.color, 3) == 255})
   end
 
   defp parse_blocks(
@@ -24,16 +23,22 @@ defmodule EEWebArchive.ArchivEE.WorldParser do
     block_type = BlockType.get(block_id)
     rest = read_and_ignore_block_type(block_type, rest)
 
-    block_color = BlockColor.get(block_id)
+    color = BlockColor.get(block_id)
+    color_alpha = elem(color, 3)
 
-    block = %{
-      id: block_id,
-      layer: layer,
-      color: block_color,
-      positions: positions
-    }
+    if color_alpha != 255 do
+      # Ignore transparent/unknown blocks
+      parse_blocks(rest, accum)
+    else
+      block = %{
+        id: block_id,
+        layer: layer,
+        color: color,
+        positions: positions
+      }
 
-    [block] ++ parse_blocks(rest, accum)
+      [block] ++ parse_blocks(rest, accum)
+    end
   end
 
   defp parse_blocks(empty_data, accum) when empty_data == "" do

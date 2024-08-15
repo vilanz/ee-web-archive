@@ -14,6 +14,6 @@ defmodule EEWebArchive.ArchivEE.Parser.BlockColor do
                 end)
 
   def get(block_id) do
-    Map.get(@block_colors, block_id)
+    Map.get(@block_colors, block_id, {0, 0, 0, 0})
   end
 end
