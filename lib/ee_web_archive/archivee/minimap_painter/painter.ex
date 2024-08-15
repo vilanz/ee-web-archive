@@ -1,24 +1,21 @@
 defmodule EEWebArchive.ArchivEE.MinimapPainter do
-  alias ExPng.Image
-  alias ExPng.Color
-
   def paint(block_list, width, height, id) do
-    image = Image.new(width, height)
+    arr = :array.new(size: width * height, default: {0, 0, 0})
 
     image =
-      Enum.reduce(block_list, image, fn block, acc_image ->
+      Enum.reduce(block_list, arr, fn block, acc_image ->
         {r, g, b, _a} = block.color
 
-        color =
-          Color.rgb(r, g, b)
-
         Enum.reduce(block.positions, acc_image, fn {x, y}, acc_image ->
-          Image.Drawing.draw(acc_image, {x, y}, color)
+          :array.set(y * width + x, {r, g, b}, acc_image)
         end)
       end)
 
-    path = "/srv/ee-web-archive/archivee-minimaps/#{id}.png"
+    image =
+      Pngex.new(type: :rgb, width: width, height: height)
+      |> Pngex.generate(image |> :array.to_list())
 
-    Image.to_file(image, path)
+    path = "/srv/ee-web-archive/archivee-minimaps/#{id}.png"
+    File.write!(path, image)
   end
 end
