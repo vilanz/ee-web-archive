@@ -1,6 +1,8 @@
 defmodule EEWebArchive.ArchivEE.WorldData do
   use Ecto.Schema
 
+  @type t :: %__MODULE__{}
+
   @primary_key {:rowid, :integer, autogenerate: false}
 
   schema "_world_data_zstd" do

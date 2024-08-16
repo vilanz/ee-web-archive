@@ -19,9 +19,9 @@ defmodule EEWebArchiveWeb.WorldViewLive do
     """
   end
 
-  def mount(%{"id" => id}, _session, socket) do
+  def mount(%{"rowid" => rowid}, _session, socket) do
     world =
-      Worlds.get_by_id(id)
+      Worlds.get_by_rowid(rowid)
       |> Worlds.preload_owning_player()
       |> Worlds.preload_owning_crew()
 

@@ -1,9 +1,9 @@
 defmodule EEWebArchive.ArchivEE.Minimaps.Minimap do
   alias EEWebArchive.ArchivEE.WorldParser.Block
 
-  @spec paint(block_list :: list(Block.t()), width :: integer(), height :: integer()) ::
+  @spec generate(block_list :: list(Block.t()), width :: integer(), height :: integer()) ::
           iolist()
-  def paint(block_list, width, height) do
+  def generate(block_list, width, height) do
     arr = :array.new(size: width * height, default: {0, 0, 0})
 
     image =
@@ -19,11 +19,7 @@ defmodule EEWebArchive.ArchivEE.Minimaps.Minimap do
     |> Pngex.generate(image |> :array.to_list())
   end
 
-  def save(image, world_id) do
-    File.write!(minimap_path(world_id), image)
-  end
-
-  defp minimap_path(world_id) do
-    "/srv/ee-web-archive/archivee-minimaps/#{world_id}.png"
+  def path(world_rowid) do
+    "/srv/ee-web-archive/archivee-minimaps/#{world_rowid}.png"
   end
 end

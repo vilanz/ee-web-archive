@@ -1,11 +1,10 @@
 defmodule EEWebArchive.ArchivEE.Worlds do
   alias EEWebArchive.ArchivEERepo
   alias EEWebArchive.ArchivEE.World
-  alias EEWebArchive.ArchivEE.WorldParser
-  alias EEWebArchive.ArchivEE.Minimaps.Minimap
 
-  def get_by_id(id) do
-    ArchivEERepo.get_by(World, id: id)
+  @spec get_by_rowid(integer()) :: World.t()
+  def get_by_rowid(rowid) do
+    ArchivEERepo.get_by(World, rowid: rowid)
   end
 
   def preload_owning_player(world) do
@@ -16,26 +15,19 @@ defmodule EEWebArchive.ArchivEE.Worlds do
     ArchivEERepo.preload(world, :owning_crew)
   end
 
-  def parse_worlds_data(worlds) do
-    world_rowids = Enum.map(worlds, fn world -> world.rowid end)
-
-    sql_world_rowids_in = Enum.join(Enum.map(world_rowids, fn _ -> "?" end), ",")
-
-    %{rows: rows} =
+  @spec get_map_data(integer()) :: bitstring()
+  def get_map_data(world_rowid) do
+    %{rows: [[data]]} =
       ArchivEERepo.query!(
         """
-          SELECT zstd_decompress(d.data, false, 1, true), width, height, id
+          SELECT zstd_decompress(d.data, false, 1, true)
           FROM world w
           JOIN _world_data_zstd d ON w.data_ref = d.rowid
-          WHERE w.rowid IN (#{sql_world_rowids_in})
+          WHERE w.rowid == ?
         """,
-        world_rowids
+        [world_rowid]
       )
 
-    Enum.each(rows, fn [data, width, height, id] ->
-      block_data = WorldParser.parse(data)
-      image = Minimap.paint(block_data, width, height)
-      Minimap.save(image, id)
-    end)
+    data
   end
 end

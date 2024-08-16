@@ -1,7 +1,6 @@
 defmodule EEWebArchiveWeb.PlayerViewLive do
   use EEWebArchiveWeb, :live_view
 
-  alias EEWebArchive.ArchivEE.Worlds
   alias EEWebArchive.ArchivEE.Players
 
   def render(assigns) do
@@ -42,8 +41,6 @@ defmodule EEWebArchiveWeb.PlayerViewLive do
       |> Players.preload_worlds()
       |> Players.preload_friends()
       |> Players.preload_crews()
-
-    Worlds.parse_worlds_data(player.worlds)
 
     {:ok, assign(socket, player: player)}
   end

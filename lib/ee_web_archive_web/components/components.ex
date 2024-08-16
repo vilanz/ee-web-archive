@@ -41,7 +41,7 @@ defmodule EEWebArchiveWeb.Components do
     <div class="" navigate={~p"/worlds/#{@world.id}"}>
       <h4><%= @world.name %></h4>
       <p><%= @world.plays %> plays</p>
-      <img src={"/uploads/archivee-minimaps/#{@world.id}.png"} />
+      <img src={"/archivee_minimap/#{@world.rowid}"} />
     </div>
     """
   end

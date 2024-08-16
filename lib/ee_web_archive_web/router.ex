@@ -21,6 +21,7 @@ defmodule EEWebArchiveWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    get "/archivee_minimap/:world_rowid", MinimapController, :archivee_minimap
   end
 
   # Other scopes may use custom stacks.
@@ -83,7 +84,7 @@ defmodule EEWebArchiveWeb.Router do
 
       live "/players/:name", PlayerViewLive, :new
       live "/crews/:id", CrewViewLive, :new
-      live "/worlds/:id", WorldViewLive, :new
+      live "/worlds/:rowid", WorldViewLive, :new
     end
   end
 end

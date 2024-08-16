@@ -2,6 +2,8 @@ defmodule EEWebArchive.ArchivEE.World do
   alias EEWebArchive.ArchivEE
   use Ecto.Schema
 
+  @type t :: %__MODULE__{}
+
   @primary_key {:rowid, :integer, autogenerate: false}
 
   schema "world" do
