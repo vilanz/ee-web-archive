@@ -1,12 +1,15 @@
 defmodule EEWebArchive.ArchivEE.WorldParser do
-  alias EEWebArchive.ArchivEE.Parser.BlockColor
-  alias EEWebArchive.ArchivEE.BlockType
+  alias EEWebArchive.ArchivEE.WorldParser.BlockColor
+  alias EEWebArchive.ArchivEE.WorldParser.BlockType
+  alias EEWebArchive.ArchivEE.WorldParser.Block
   alias EEWebArchive.ArchivEE.ByteReader
 
+  @spec parse_world_data(<<>>) :: nil
   def parse_world_data("") do
     nil
   end
 
+  @spec parse(bitstring()) :: list(Block.t())
   def parse(world_data) when is_bitstring(world_data) do
     parse_blocks(world_data, [])
     |> Enum.sort_by(&{&1.layer}, :desc)
@@ -18,7 +21,10 @@ defmodule EEWebArchive.ArchivEE.WorldParser do
        ) do
     {xs_positions, rest} = ByteReader.read_ushort_array(rest)
     {ys_positions, rest} = ByteReader.read_ushort_array(rest)
-    positions = parse_block_xy_positions(xs_positions, ys_positions)
+
+    positions =
+      xs_positions
+      |> Enum.zip(ys_positions)
 
     block_type = BlockType.get(block_id)
     rest = read_and_ignore_block_type(block_type, rest)
@@ -30,7 +36,7 @@ defmodule EEWebArchive.ArchivEE.WorldParser do
       # Ignore transparent/unknown blocks
       parse_blocks(rest, accum)
     else
-      block = %{
+      block = %Block{
         id: block_id,
         layer: layer,
         color: color,
@@ -43,11 +49,6 @@ defmodule EEWebArchive.ArchivEE.WorldParser do
 
   defp parse_blocks(empty_data, accum) when empty_data == "" do
     accum
-  end
-
-  defp parse_block_xy_positions(xs_positions, ys_positions) do
-    xs_positions
-    |> Enum.zip(ys_positions)
   end
 
   defp read_and_ignore_block_type(block_type, data) do

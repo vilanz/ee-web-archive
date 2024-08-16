@@ -1,4 +1,6 @@
-defmodule EEWebArchive.ArchivEE.Parser.BlockColor do
+defmodule EEWebArchive.ArchivEE.WorldParser.BlockColor do
+  @type t :: {integer(), integer(), integer(), integer()}
+
   @block_colors :ee_web_archive
                 |> :code.priv_dir()
                 |> Path.join("data/block_colors.csv")
@@ -13,6 +15,7 @@ defmodule EEWebArchive.ArchivEE.Parser.BlockColor do
                   )
                 end)
 
+  @spec get(block_id :: integer()) :: t()
   def get(block_id) do
     Map.get(@block_colors, block_id, {0, 0, 0, 0})
   end

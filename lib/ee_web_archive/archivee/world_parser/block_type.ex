@@ -1,4 +1,6 @@
-defmodule EEWebArchive.ArchivEE.BlockType do
+defmodule EEWebArchive.ArchivEE.WorldParser.BlockType do
+  alias EEWebArchive.ArchivEE.ByteReader
+
   @morphable_blocks [
     327,
     328,
@@ -209,4 +211,40 @@ defmodule EEWebArchive.ArchivEE.BlockType do
     do: :npc
 
   def get(_block_id), do: :normal
+
+  def read_and_ignore_block_type(block_type, data) do
+    cond do
+      block_type == :normal ->
+        data
+
+      block_type in [:morphable, :rotatable, :sorta_rotatable, :number, :enum, :music] ->
+        <<_::integer-32, data::binary>> = data
+        data
+
+      block_type == :portal ->
+        <<_::integer-32, _::integer-32, _::integer-32, data::binary>> = data
+        data
+
+      block_type in [:sign, :world_portal] ->
+        {_, data} = ByteReader.read_utf8_string(data)
+        <<_::integer-32, data::binary>> = data
+        data
+
+      block_type == :label ->
+        {_, data} = ByteReader.read_utf8_string(data)
+        {_, data} = ByteReader.read_utf8_string(data)
+        <<_::integer-32, data::binary>> = data
+        data
+
+      block_type == :npc ->
+        {_, data} = ByteReader.read_utf8_string(data)
+        {_, data} = ByteReader.read_utf8_string(data)
+        {_, data} = ByteReader.read_utf8_string(data)
+        {_, data} = ByteReader.read_utf8_string(data)
+        data
+
+      true ->
+        data
+    end
+  end
 end

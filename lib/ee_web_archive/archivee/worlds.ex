@@ -2,7 +2,7 @@ defmodule EEWebArchive.ArchivEE.Worlds do
   alias EEWebArchive.ArchivEERepo
   alias EEWebArchive.ArchivEE.World
   alias EEWebArchive.ArchivEE.WorldParser
-  alias EEWebArchive.ArchivEE.MinimapPainter
+  alias EEWebArchive.ArchivEE.Minimaps.Minimap
 
   def get_by_id(id) do
     ArchivEERepo.get_by(World, id: id)
@@ -34,7 +34,8 @@ defmodule EEWebArchive.ArchivEE.Worlds do
 
     Enum.each(rows, fn [data, width, height, id] ->
       block_data = WorldParser.parse(data)
-      MinimapPainter.paint(block_data, width, height, id)
+      image = Minimap.paint(block_data, width, height)
+      Minimap.save(image, id)
     end)
   end
 end
