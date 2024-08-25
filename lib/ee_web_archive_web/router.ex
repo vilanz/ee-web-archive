@@ -22,6 +22,7 @@ defmodule EEWebArchiveWeb.Router do
 
     get "/", PageController, :home
     get "/archivee_minimap/:world_rowid", MinimapController, :archivee_minimap
+    get "/smileys/:player_id", SmileyController, :by_player
   end
 
   # Other scopes may use custom stacks.

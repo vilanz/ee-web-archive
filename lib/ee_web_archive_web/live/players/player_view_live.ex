@@ -8,15 +8,15 @@ defmodule EEWebArchiveWeb.PlayerViewLive do
     <div class="flex">
       <div class="basis-[350px] shrink-0">
         <h1>
-          <.smiley id={@player.smiley_id} scale={2} />
+          <.smiley player_id={@player.id} scale={2} />
           <%= @player.name %>
         </h1>
-        <h3>
+        <h4>
           Created: <%= @player.created %>
-        </h3>
-        <h3>
+        </h4>
+        <h4>
           Last login: <%= @player.last_login %>
-        </h3>
+        </h4>
         <h2>Crews</h2>
         <div class="flex flex-wrap gap-2">
           <.crew_link :for={crew <- @player.crews} crew={crew} />
@@ -42,7 +42,6 @@ defmodule EEWebArchiveWeb.PlayerViewLive do
       |> Players.preload_worlds()
       |> Players.preload_friends()
       |> Players.preload_crews()
-      |> Players.load_smiley()
 
     {:ok, assign(socket, player: player)}
   end

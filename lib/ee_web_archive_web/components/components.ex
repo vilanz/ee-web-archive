@@ -15,7 +15,11 @@ defmodule EEWebArchiveWeb.Components do
   def player_link(assigns) do
     ~H"""
     <div class="">
-      <.link class="link" navigate={~p"/players/#{@player.name}"}>
+      <.link
+        class="inline-block rounded-lg bg-gray-700 h-26 pl-1 pr-2 no-underline"
+        navigate={~p"/players/#{@player.name}"}
+      >
+        <.smiley player_id={@player.id} />
         <%= @player.name %>
       </.link>
     </div>
@@ -27,7 +31,10 @@ defmodule EEWebArchiveWeb.Components do
   def crew_link(assigns) do
     ~H"""
     <div class="">
-      <.link class="link" navigate={~p"/crews/#{@crew.id}"}>
+      <.link
+        class="inline-block rounded-lg bg-gray-700 h-26 px-2 h-26 no-underline"
+        navigate={~p"/crews/#{@crew.id}"}
+      >
         <%= @crew.name %>
       </.link>
     </div>
@@ -57,22 +64,12 @@ defmodule EEWebArchiveWeb.Components do
     """
   end
 
-  attr :id, :integer, default: 1
+  attr :player_id, :integer, default: 1
   attr :scale, :integer, default: 1
 
   def smiley(assigns) do
-    # the extra_space var is to compensate for CSS's scale() not affecting element dimensions
-    assigns =
-      assign(assigns,
-        smiley_position: -26 * assigns.id
-      )
-
     ~H"""
-    <span
-      class="smiley"
-      style={"transform: scale(#{@scale}); background-position: #{@smiley_position}px 0px;"}
-    >
-    </span>
+    <img class="smiley" src={"/smileys/#{@player_id}"} style={"transform: scale(#{@scale});"} />
     """
   end
 end

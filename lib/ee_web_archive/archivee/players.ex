@@ -25,12 +25,4 @@ defmodule EEWebArchive.ArchivEE.Players do
   def preload_crews(player) do
     ArchivEERepo.preload(player, :crews)
   end
-
-  def load_smiley(player) do
-    smiley_id = Smileys.get_player_smiley_id(player.id)
-
-    Map.merge(player, %{
-      smiley_id: smiley_id
-    })
-  end
 end
