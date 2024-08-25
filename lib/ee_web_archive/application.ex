@@ -10,6 +10,7 @@ defmodule EEWebArchive.Application do
     children = [
       EEWebArchiveWeb.Telemetry,
       EEWebArchive.MainRepo,
+      EEWebArchive.SmileyRepo,
       EEWebArchive.ArchivEERepo,
       {DNSCluster, query: Application.get_env(:ee_web_archive, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: EEWebArchive.PubSub},

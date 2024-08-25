@@ -56,4 +56,23 @@ defmodule EEWebArchiveWeb.Components do
     </.link>
     """
   end
+
+  attr :id, :integer, default: 1
+  attr :scale, :integer, default: 1
+
+  def smiley(assigns) do
+    # the extra_space var is to compensate for CSS's scale() not affecting element dimensions
+    assigns =
+      assign(assigns,
+        smiley_position: -26 * assigns.id
+      )
+
+    ~H"""
+    <span
+      class="smiley"
+      style={"transform: scale(#{@scale}); background-position: #{@smiley_position}px 0px;"}
+    >
+    </span>
+    """
+  end
 end

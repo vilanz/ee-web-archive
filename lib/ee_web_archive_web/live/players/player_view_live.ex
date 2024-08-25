@@ -7,9 +7,10 @@ defmodule EEWebArchiveWeb.PlayerViewLive do
     ~H"""
     <div class="flex">
       <div class="basis-[350px] shrink-0">
-        <h2>
+        <h1>
+          <.smiley id={@player.smiley_id} scale={2} />
           <%= @player.name %>
-        </h2>
+        </h1>
         <h3>
           Created: <%= @player.created %>
         </h3>
@@ -41,6 +42,7 @@ defmodule EEWebArchiveWeb.PlayerViewLive do
       |> Players.preload_worlds()
       |> Players.preload_friends()
       |> Players.preload_crews()
+      |> Players.load_smiley()
 
     {:ok, assign(socket, player: player)}
   end

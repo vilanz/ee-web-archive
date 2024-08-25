@@ -1,6 +1,8 @@
 defmodule EEWebArchive.ArchivEE.WorldData do
   use Ecto.Schema
 
+  alias EEWebArchive.ArchivEE
+
   @type t :: %__MODULE__{}
 
   @primary_key {:rowid, :integer, autogenerate: false}

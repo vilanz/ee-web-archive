@@ -88,3 +88,5 @@ config :swoosh, :api_client, false
 config :ee_web_archive, EEWebArchive.ArchivEERepo,
   database: "./priv/data/ArchivEE.sqlite3",
   load_extensions: ["./priv/data/libsqlite_zstd.so"]
+
+config :ee_web_archive, EEWebArchive.SmileyRepo, database: "./priv/data/smileys.sqlite3"

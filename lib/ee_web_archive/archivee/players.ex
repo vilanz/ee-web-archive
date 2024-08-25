@@ -1,4 +1,5 @@
 defmodule EEWebArchive.ArchivEE.Players do
+  alias EEWebArchive.Smileys
   alias EEWebArchive.ArchivEERepo
   alias EEWebArchive.ArchivEE.Player
   alias EEWebArchive.ArchivEE.World
@@ -23,5 +24,13 @@ defmodule EEWebArchive.ArchivEE.Players do
   @spec preload_crews(%Player{}) :: %Player{crews: %Crew{}}
   def preload_crews(player) do
     ArchivEERepo.preload(player, :crews)
+  end
+
+  def load_smiley(player) do
+    smiley_id = Smileys.get_player_smiley_id(player.id)
+
+    Map.merge(player, %{
+      smiley_id: smiley_id
+    })
   end
 end

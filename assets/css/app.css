@@ -7,11 +7,9 @@
 @layer base {
     html {
         font-family: "Barlow", system-ui, sans-serif;
+        font-size: 16px;
+        image-rendering: pixelated;
     }
-}
-
-html {
-    font-size: 16px;
 }
 
 h1 {
@@ -42,4 +40,12 @@ h4 {
 p {
     margin-top: 0.25rem;
     margin-bottom: 0.25rem;
+}
+
+.smiley {
+    background: url("/images/smileys.png");
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    line-height: 26px;
 }
