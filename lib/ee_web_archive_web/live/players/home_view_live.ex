@@ -7,7 +7,7 @@ defmodule EEWebArchiveWeb.PlayerHomeViewLive do
     <div class="flex w-full prose">
       <div class="flex flex-col gap-2 w-full max-w-[600px]">
         <.simple_form for={@form} phx-change="search_player" phx-submit="ignore_submit">
-          <h4>Search for a specific player...</h4>
+          <h4 class="text-center">Search for a specific player...</h4>
           <.input field={@form[:name]} placeholder="Player name" phx-debounce="300" />
         </.simple_form>
         <.space size={1} />
@@ -21,13 +21,32 @@ defmodule EEWebArchiveWeb.PlayerHomeViewLive do
           <.player_link :for={player <- @player_matches} player={player} />
         </div>
       </div>
+      <div class="flex flex-col gap-4 w-full max-w-[250px] px-6">
+        <h4 class="text-center">
+          ...or check out players with the most plays across their worlds
+        </h4>
+        <div class="flex flex-col gap-2 mb-4">
+          <span :for={{pw, idx} <- Enum.with_index(@most_plays)}>
+            #<%= idx + 1 %>: <%= format_number(pw.sum_of_plays) %>
+            <.player_link player={pw.player} />
+          </span>
+        </div>
+      </div>
     </div>
     """
   end
 
   def mount(_params, _session, socket) do
     form = to_form(%{"name" => ""}, as: "player")
-    {:ok, assign(socket, form: form, player_matches: [], exact_player_match: nil)}
+    most_plays = Players.list_by_most_plays()
+
+    {:ok,
+     assign(socket,
+       form: form,
+       player_matches: [],
+       exact_player_match: nil,
+       most_plays: most_plays
+     )}
   end
 
   def handle_event("search_player", %{"player" => %{"name" => name}}, socket) do

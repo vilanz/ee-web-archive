@@ -31,4 +31,19 @@ defmodule EEWebArchive.ArchivEE.Players do
   def preload_crews(player) do
     ArchivEERepo.preload(player, :crews)
   end
+
+  def list_by_most_plays() do
+    query =
+      from p in Player,
+        inner_join: w in assoc(p, :worlds),
+        select: %{
+          player: p,
+          sum_of_plays: selected_as(sum(w.plays), :sum_of_plays)
+        },
+        group_by: [p.id],
+        order_by: [desc: selected_as(:sum_of_plays)],
+        limit: 20
+
+    ArchivEERepo.all(query)
+  end
 end

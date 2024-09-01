@@ -90,6 +90,8 @@ defmodule EEWebArchiveWeb do
 
       # _Our_ components
       import EEWebArchiveWeb.Components
+      # _Our_ HTML helpers
+      import EEWebArchiveWeb.HTMLHelpers
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS

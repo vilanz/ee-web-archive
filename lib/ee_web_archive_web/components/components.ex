@@ -53,7 +53,7 @@ defmodule EEWebArchiveWeb.Components do
     """
   end
 
-  attr :rest, :global, include: ~w(link)
+  attr :rest, :global
   attr :class, :string, default: ""
   slot :inner_block
 
@@ -71,14 +71,6 @@ defmodule EEWebArchiveWeb.Components do
   def smiley(assigns) do
     ~H"""
     <img class="smiley" src={"/smileys/#{@player_id}"} style={"transform: scale(#{@scale});"} />
-    """
-  end
-
-  attr :rest, :global, include: ~w(input)
-
-  def simple_input(assigns) do
-    ~H"""
-    <input @test />
     """
   end
 
