@@ -5,7 +5,7 @@ defmodule EEWebArchiveWeb.PlayerViewLive do
 
   def render(assigns) do
     ~H"""
-    <div class="flex">
+    <div class="flex prose">
       <div class="basis-[350px] shrink-0">
         <h1>
           <.smiley player_id={@player.id} scale={2} />

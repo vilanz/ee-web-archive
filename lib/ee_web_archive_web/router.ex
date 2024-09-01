@@ -83,6 +83,7 @@ defmodule EEWebArchiveWeb.Router do
       live "/users/confirm/:token", UserConfirmationLive, :edit
       live "/users/confirm", UserConfirmationInstructionsLive, :new
 
+      live "/players", PlayerHomeViewLive, :new
       live "/players/:name", PlayerViewLive, :new
       live "/crews/:id", CrewViewLive, :new
       live "/worlds/:rowid", WorldViewLive, :new

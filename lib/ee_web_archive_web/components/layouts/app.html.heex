@@ -4,7 +4,7 @@
       EE Web Archive
     </h1>
     <div class="flex items-center gap-8">
-      <.menu_link>Players</.menu_link>
+      <.menu_link href={~p"/players"}>Players</.menu_link>
       <.menu_link>Worlds</.menu_link>
     </div>
 
@@ -43,7 +43,7 @@
     </div>
   </header>
   <.flash_group flash={@flash} />
-  <main class="p-6">
+  <main class="p-6 w-full h-full">
     <%= @inner_content %>
   </main>
 </div>

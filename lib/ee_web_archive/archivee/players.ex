@@ -1,5 +1,6 @@
 defmodule EEWebArchive.ArchivEE.Players do
-  alias EEWebArchive.Smileys
+  import Ecto.Query
+
   alias EEWebArchive.ArchivEERepo
   alias EEWebArchive.ArchivEE.Player
   alias EEWebArchive.ArchivEE.World
@@ -8,6 +9,11 @@ defmodule EEWebArchive.ArchivEE.Players do
   @spec get_by_name(String.t()) :: %Player{}
   def get_by_name(name) do
     ArchivEERepo.get_by(Player, name: name)
+  end
+
+  @spec list_by_name(String.t()) :: list(%Player{})
+  def list_by_name(name) do
+    ArchivEERepo.all(from player in Player, where: like(player.name, ^"%#{name}%"))
   end
 
   @spec preload_worlds(%Player{}) :: %Player{worlds: list(%World{})}
