@@ -8,7 +8,9 @@ defmodule EEWebArchiveWeb.SmileyController do
     path = "./priv/static/images/smileys/#{smiley_id}.png"
 
     if File.exists?(path) do
-      send_file(conn, 200, path)
+      conn
+      |> put_resp_header("cache-control", "private, max-age=10080")
+      |> send_file(200, path)
     else
       put_status(conn, 404)
     end
