@@ -20,7 +20,6 @@ defmodule EEWebArchiveWeb.Router do
   scope "/", EEWebArchiveWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
     get "/archivee_minimap/:world_rowid", MinimapController, :archivee_minimap
     get "/smileys/:player_id", SmileyController, :by_player
   end
@@ -80,6 +79,8 @@ defmodule EEWebArchiveWeb.Router do
 
     live_session :current_user,
       on_mount: [{EEWebArchiveWeb.UserAuth, :mount_current_user}] do
+      live "/", HomeViewLive, :new
+
       live "/users/confirm/:token", UserConfirmationLive, :edit
       live "/users/confirm", UserConfirmationInstructionsLive, :new
 

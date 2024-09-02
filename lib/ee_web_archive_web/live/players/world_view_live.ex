@@ -5,7 +5,7 @@ defmodule EEWebArchiveWeb.WorldViewLive do
 
   def render(assigns) do
     ~H"""
-    <div class="prose">
+    <div>
       <div>
         Name: <%= @world.name %>
       </div>

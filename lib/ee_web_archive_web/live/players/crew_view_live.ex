@@ -5,7 +5,7 @@ defmodule EEWebArchiveWeb.CrewViewLive do
 
   def render(assigns) do
     ~H"""
-    <div class="prose">
+    <div>
       <div>
         Name: <%= @crew.name %>
       </div>

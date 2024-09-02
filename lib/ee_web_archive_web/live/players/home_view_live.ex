@@ -5,7 +5,7 @@ defmodule EEWebArchiveWeb.PlayerHomeViewLive do
 
   def render(assigns) do
     ~H"""
-    <div class="flex flex-col items-center w-full prose gap-4">
+    <div class="flex flex-col items-center w-full gap-4">
       <div class="flex flex-col gap-2 w-full max-w-[400px] m-20">
         <div>
           <h4 class="text-center">Search for a specific player...</h4>
