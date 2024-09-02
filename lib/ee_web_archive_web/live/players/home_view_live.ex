@@ -7,16 +7,15 @@ defmodule EEWebArchiveWeb.PlayerHomeViewLive do
     ~H"""
     <div class="flex flex-col items-center w-full gap-4">
       <div class="flex flex-col gap-2 w-full max-w-[400px] m-20">
-        <div>
+        <.simple_form for={@form} phx-submit="ignore_submit">
           <h4 class="text-center">Search for a specific player...</h4>
           <.input
-            type="text"
-            id="player-search"
+            field={@form[:player_query]}
             placeholder="Player name"
             phx-change="search_player"
             phx-debounce="300"
           />
-        </div>
+        </.simple_form>
         <.space size={1} />
         <%= if @exact_player_match do %>
           <div class="flex justify-center">
@@ -44,7 +43,7 @@ defmodule EEWebArchiveWeb.PlayerHomeViewLive do
   end
 
   def mount(_params, _session, socket) do
-    form = to_form(%{"name" => ""}, as: "player")
+    form = to_form(%{"player_query" => ""}, as: "form")
     most_plays_players = Players.list_by_most_plays()
     most_played_worlds = Worlds.list_most_played()
 
@@ -58,15 +57,15 @@ defmodule EEWebArchiveWeb.PlayerHomeViewLive do
      )}
   end
 
-  def handle_event("search_player", %{"player" => %{"name" => name}}, socket) do
-    if String.length(name) > 2 do
+  def handle_event("search_player", %{"form" => %{"player_query" => player_query}}, socket) do
+    if String.length(player_query) > 2 do
       player_matches =
-        Players.list_by_name(name)
+        Players.list_by_name(player_query)
 
-      exact_player_match = Enum.find(player_matches, fn player -> player.name == name end)
+      exact_player_match = Enum.find(player_matches, fn player -> player.name == player_query end)
 
       if exact_player_match do
-        player_matches = Enum.filter(player_matches, fn player -> player.name != name end)
+        player_matches = Enum.filter(player_matches, fn player -> player.name != player_query end)
 
         {:noreply,
          assign(socket, player_matches: player_matches, exact_player_match: exact_player_match)}

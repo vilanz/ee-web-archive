@@ -192,7 +192,9 @@ defmodule EEWebArchiveWeb.CoreComponents do
   attr :for, :any, required: true, doc: "the data structure for the form"
   attr :as, :any, default: nil, doc: "the server side parameter to collect all input under"
 
-  attr :rest, :global, doc: "the arbitrary HTML attributes to apply to the form tag"
+  attr :rest, :global,
+    include: ~w(autocomplete name rel action enctype method novalidate target multipart),
+    doc: "the arbitrary HTML attributes to apply to the form tag"
 
   slot :inner_block, required: true
   slot :actions, doc: "the slot for form actions, such as a submit button"
@@ -266,7 +268,7 @@ defmodule EEWebArchiveWeb.CoreComponents do
   attr :id, :any, default: nil
   attr :name, :any
   attr :label, :string, default: nil
-  attr :value, :any, default: nil
+  attr :value, :any
 
   attr :type, :string,
     default: "text",
@@ -360,6 +362,8 @@ defmodule EEWebArchiveWeb.CoreComponents do
     <div>
       <.label for={@id}><%= @label %></.label>
       <input
+        type={@type}
+        name={@name}
         id={@id}
         value={Phoenix.HTML.Form.normalize_value(@type, @value)}
         class={[
