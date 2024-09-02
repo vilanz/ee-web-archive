@@ -1,24 +1,21 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@font-face {
-    font-family: 'PixelOperator';
-    src: url('../fonts/PixelOperator.ttf');
-    font-weight: normal;
-}
-
-@font-face {
-    font-family: 'PixelOperator';
-    src: url('../fonts/PixelOperator-Bold.ttf');
-    font-weight: bold;
-}
+@import url('https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 @layer base {
     html {
-        font-family: "PixelOperator", system-ui, sans-serif;
-        font-size: 20px;
         image-rendering: pixelated;
+
+        font-family: "Fira Sans", sans-serif;
+        font-size: 16px;
+    }
+}
+
+@layer components {
+    .chip {
+        @apply inline-block rounded-lg bg-neutral-800 border-neutral-700 border-2 h-[26px] pl-1 pr-2 no-underline;
     }
 }
 

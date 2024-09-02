@@ -10,7 +10,6 @@ const round = (num) =>
     .toFixed(7)
     .replace(/(\.[0-9]+?)0+$/, '$1')
     .replace(/\.0$/, '')
-const em = (px, base) => `${round(px / base)}em`
 
 module.exports = {
   content: [
@@ -18,14 +17,10 @@ module.exports = {
     "../lib/ee_web_archive_web.ex",
     "../lib/ee_web_archive_web/**/*.*ex"
   ],
-  daisyui: {
-    themes: ["dark"],
-  },
   plugins: [
     require("@tailwindcss/forms")({
       strategy: 'class'
     }),
-    require('daisyui'),
     // Allows prefixing tailwind classes with LiveView classes to add rules
     // only when LiveView classes are applied, for example:
     //
