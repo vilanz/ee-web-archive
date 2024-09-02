@@ -1,4 +1,6 @@
 defmodule EEWebArchive.ArchivEE.Worlds do
+  import Ecto.Query
+
   alias EEWebArchive.ArchivEERepo
   alias EEWebArchive.ArchivEE.World
 
@@ -29,5 +31,14 @@ defmodule EEWebArchive.ArchivEE.Worlds do
       )
 
     data
+  end
+
+  def list_most_played() do
+    query =
+      from w in World,
+        order_by: [desc: :plays],
+        limit: 10
+
+    ArchivEERepo.all(query)
   end
 end

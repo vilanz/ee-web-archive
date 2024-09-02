@@ -1,15 +1,22 @@
 defmodule EEWebArchiveWeb.PlayerHomeViewLive do
+  alias EEWebArchive.ArchivEE.Worlds
   alias EEWebArchive.ArchivEE.Players
   use EEWebArchiveWeb, :live_view
 
   def render(assigns) do
     ~H"""
-    <div class="flex w-full prose">
-      <div class="flex flex-col gap-2 w-full max-w-[600px]">
-        <.simple_form for={@form} phx-change="search_player" phx-submit="ignore_submit">
+    <div class="flex flex-col items-center w-full prose gap-4">
+      <div class="flex flex-col gap-2 w-full max-w-[400px] m-20">
+        <div>
           <h4 class="text-center">Search for a specific player...</h4>
-          <.input field={@form[:name]} placeholder="Player name" phx-debounce="300" />
-        </.simple_form>
+          <.input
+            type="text"
+            id="player-search"
+            placeholder="Player name"
+            phx-change="search_player"
+            phx-debounce="300"
+          />
+        </div>
         <.space size={1} />
         <%= if @exact_player_match do %>
           <div class="flex justify-center">
@@ -21,13 +28,13 @@ defmodule EEWebArchiveWeb.PlayerHomeViewLive do
           <.player_link :for={player <- @player_matches} player={player} />
         </div>
       </div>
-      <div class="flex flex-col gap-4 w-full max-w-[250px] px-6">
+      <div class="flex flex-col gap-2 w-full px-6">
         <h4 class="text-center">
           ...or check out players with the most plays across their worlds
         </h4>
-        <div class="flex flex-col gap-2 mb-4">
-          <span :for={{pw, idx} <- Enum.with_index(@most_plays)}>
-            #<%= idx + 1 %>: <%= format_number(pw.sum_of_plays) %>
+        <div class="flex flex-wrap gap-4 mb-4">
+          <span :for={{pw, idx} <- Enum.with_index(@most_plays_players)}>
+            <b>#<%= idx + 1 %></b>: <%= format_number(pw.sum_of_plays) %>
             <.player_link player={pw.player} />
           </span>
         </div>
@@ -38,14 +45,16 @@ defmodule EEWebArchiveWeb.PlayerHomeViewLive do
 
   def mount(_params, _session, socket) do
     form = to_form(%{"name" => ""}, as: "player")
-    most_plays = Players.list_by_most_plays()
+    most_plays_players = Players.list_by_most_plays()
+    most_played_worlds = Worlds.list_most_played()
 
     {:ok,
      assign(socket,
        form: form,
        player_matches: [],
        exact_player_match: nil,
-       most_plays: most_plays
+       most_plays_players: most_plays_players,
+       most_played_worlds: most_played_worlds
      )}
   end
 

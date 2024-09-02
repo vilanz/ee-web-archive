@@ -266,7 +266,7 @@ defmodule EEWebArchiveWeb.CoreComponents do
   attr :id, :any, default: nil
   attr :name, :any
   attr :label, :string, default: nil
-  attr :value, :any
+  attr :value, :any, default: nil
 
   attr :type, :string,
     default: "text",
@@ -360,8 +360,6 @@ defmodule EEWebArchiveWeb.CoreComponents do
     <div>
       <.label for={@id}><%= @label %></.label>
       <input
-        type={@type}
-        name={@name}
         id={@id}
         value={Phoenix.HTML.Form.normalize_value(@type, @value)}
         class={[
