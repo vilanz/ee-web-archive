@@ -5,18 +5,24 @@ defmodule EEWebArchiveWeb.PlayerViewLive do
 
   def render(assigns) do
     ~H"""
-    <div class="flex">
+    <div class="flex gap-2">
       <div class="basis-[350px] shrink-0">
         <h1>
           <.smiley player_id={@player.id} scale={2} />
           <%= @player.name %>
         </h1>
-        <h4>
-          Created: <%= @player.created %>
-        </h4>
-        <h4>
-          Last login: <%= @player.last_login %>
-        </h4>
+        <p>
+          <b>
+            Created at
+          </b>
+          <%= format_date(@player.created) %>
+        </p>
+        <p>
+          <b>
+            Last login at
+          </b>
+          <%= format_date(@player.last_login) %>
+        </p>
         <h2>Crews</h2>
         <div class="flex flex-wrap gap-2">
           <.crew_link :for={crew <- @player.crews} crew={crew} />

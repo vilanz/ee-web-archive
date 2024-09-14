@@ -1,5 +1,4 @@
 defmodule EEWebArchiveWeb.PlayerHomeViewLive do
-  alias EEWebArchive.ArchivEE.Worlds
   alias EEWebArchive.ArchivEE.Players
   use EEWebArchiveWeb, :live_view
 
@@ -27,33 +26,18 @@ defmodule EEWebArchiveWeb.PlayerHomeViewLive do
           <.player_link :for={player <- @player_matches} player={player} />
         </div>
       </div>
-      <div class="flex flex-col gap-2 w-full px-6">
-        <h4 class="text-center">
-          ...or check out players with the most plays across their worlds
-        </h4>
-        <div class="flex flex-wrap gap-4 mb-4">
-          <span :for={{pw, idx} <- Enum.with_index(@most_plays_players)}>
-            <b>#<%= idx + 1 %></b>: <%= format_number(pw.sum_of_plays) %>
-            <.player_link player={pw.player} />
-          </span>
-        </div>
-      </div>
     </div>
     """
   end
 
   def mount(_params, _session, socket) do
     form = to_form(%{"player_query" => ""}, as: "form")
-    most_plays_players = Players.list_by_most_plays()
-    most_played_worlds = Worlds.list_most_played()
 
     {:ok,
      assign(socket,
        form: form,
        player_matches: [],
-       exact_player_match: nil,
-       most_plays_players: most_plays_players,
-       most_played_worlds: most_played_worlds
+       exact_player_match: nil
      )}
   end
 

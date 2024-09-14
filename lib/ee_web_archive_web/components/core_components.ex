@@ -346,7 +346,7 @@ defmodule EEWebArchiveWeb.CoreComponents do
         id={@id}
         name={@name}
         class={[
-          "input input-bordered w-full",
+          "input w-full",
           @errors != [] && "border-rose-400 focus:border-rose-400"
         ]}
         {@rest}
@@ -367,7 +367,7 @@ defmodule EEWebArchiveWeb.CoreComponents do
         id={@id}
         value={Phoenix.HTML.Form.normalize_value(@type, @value)}
         class={[
-          "input input-bordered w-full",
+          "input w-full",
           @errors != [] && "border-rose-400 focus:border-rose-400"
         ]}
         {@rest}
@@ -385,7 +385,7 @@ defmodule EEWebArchiveWeb.CoreComponents do
 
   def label(assigns) do
     ~H"""
-    <div class="label pt-2">
+    <div class="label">
       <label for={@for} class="text-md">
         <%= render_slot(@inner_block) %>
       </label>
