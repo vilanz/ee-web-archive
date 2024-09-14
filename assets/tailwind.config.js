@@ -17,10 +17,14 @@ module.exports = {
     "../lib/ee_web_archive_web.ex",
     "../lib/ee_web_archive_web/**/*.*ex"
   ],
+  daisyui: {
+    themes: ["dark"],
+  },
   plugins: [
     require("@tailwindcss/forms")({
       strategy: 'class'
     }),
+    require('daisyui'),
     // Allows prefixing tailwind classes with LiveView classes to add rules
     // only when LiveView classes are applied, for example:
     //

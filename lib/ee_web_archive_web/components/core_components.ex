@@ -346,7 +346,7 @@ defmodule EEWebArchiveWeb.CoreComponents do
         id={@id}
         name={@name}
         class={[
-          "input w-full",
+          "input input-bordered w-full",
           @errors != [] && "border-rose-400 focus:border-rose-400"
         ]}
         {@rest}
@@ -367,7 +367,7 @@ defmodule EEWebArchiveWeb.CoreComponents do
         id={@id}
         value={Phoenix.HTML.Form.normalize_value(@type, @value)}
         class={[
-          "input w-full",
+          "input input-bordered w-full",
           @errors != [] && "border-rose-400 focus:border-rose-400"
         ]}
         {@rest}

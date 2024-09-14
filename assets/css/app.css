@@ -17,18 +17,10 @@
     .chip {
         @apply inline-block rounded-lg bg-neutral-800 border-neutral-700 border-2 h-[26px] pl-1 pr-2 no-underline;
     }
-
-    .input {
-        @apply border-neutral-700 border-2 rounded-lg bg-transparent p-2;
-    }
-
-    .label {
-        @apply pb-1 pt-3 font-bold;
-    }
 }
 
 h1 {
-    font-size: 1.85rem;
+    font-size: 1.55rem;
     font-weight: bold;
 }
 

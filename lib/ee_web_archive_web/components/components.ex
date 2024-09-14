@@ -9,6 +9,7 @@ defmodule EEWebArchiveWeb.Components do
   alias EEWebArchive.ArchivEE.Crew
   alias EEWebArchive.ArchivEE.World
   alias EEWebArchive.ArchivEE.Player
+  alias Phoenix.LiveView.JS
 
   attr :player, Player
 
@@ -39,7 +40,7 @@ defmodule EEWebArchiveWeb.Components do
 
   def world_card(assigns) do
     ~H"""
-    <div class="" navigate={~p"/worlds/#{@world.id}"}>
+    <div class="min-h-0" navigate={~p"/worlds/#{@world.id}"}>
       <h4><%= @world.name %></h4>
       <p><%= @world.plays %> plays</p>
       <img src={"/archivee_minimap/#{@world.rowid}"} />
@@ -53,9 +54,11 @@ defmodule EEWebArchiveWeb.Components do
 
   def menu_link(assigns) do
     ~H"""
-    <.link class={"link no-underline hover-blue-500 " <> @class} {@rest}>
-      <%= render_slot(@inner_block) %>
-    </.link>
+    <li>
+      <.link class={"link no-underline hover-blue-500 " <> @class} {@rest}>
+        <%= render_slot(@inner_block) %>
+      </.link>
+    </li>
     """
   end
 
@@ -73,6 +76,22 @@ defmodule EEWebArchiveWeb.Components do
   def space(assigns) do
     ~H"""
     <div style={"margin: #{@size * 5}px"} />
+    """
+  end
+
+  slot :header, required: true
+  slot :items, required: true
+
+  def submenu(assigns) do
+    ~H"""
+    <li>
+      <span class="!bg-inherit !cursor-default">
+        <%= render_slot(@header) %>
+      </span>
+      <ul>
+        <%= render_slot(@items) %>
+      </ul>
+    </li>
     """
   end
 end
