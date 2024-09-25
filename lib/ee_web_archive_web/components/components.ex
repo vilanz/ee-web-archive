@@ -9,7 +9,6 @@ defmodule EEWebArchiveWeb.Components do
   alias EEWebArchive.ArchivEE.Crew
   alias EEWebArchive.ArchivEE.World
   alias EEWebArchive.ArchivEE.Player
-  alias Phoenix.LiveView.JS
 
   attr :player, Player
 
@@ -40,7 +39,7 @@ defmodule EEWebArchiveWeb.Components do
 
   def world_card(assigns) do
     ~H"""
-    <div class="min-h-0" navigate={~p"/worlds/#{@world.id}"}>
+    <div class="min-h-0">
       <h4><%= @world.name %></h4>
       <p><%= @world.plays %> plays</p>
       <img src={"/archivee_minimap/#{@world.rowid}"} />

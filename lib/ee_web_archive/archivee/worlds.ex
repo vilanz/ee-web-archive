@@ -41,4 +41,18 @@ defmodule EEWebArchive.ArchivEE.Worlds do
 
     ArchivEERepo.all(query)
   end
+
+  def paginate_by_name(name, page) do
+    items_per_page = 10
+    offset = items_per_page * (page - 1)
+
+    query =
+      from w in World,
+        order_by: [desc: :plays],
+        where: like(w.name, ^"%#{name}%"),
+        limit: ^items_per_page,
+        offset: ^offset
+
+    ArchivEERepo.all(query)
+  end
 end
