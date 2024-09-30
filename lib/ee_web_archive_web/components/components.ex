@@ -39,10 +39,24 @@ defmodule EEWebArchiveWeb.Components do
 
   def world_card(assigns) do
     ~H"""
-    <div class="min-h-0">
-      <h4><%= @world.name %></h4>
-      <p><%= @world.plays %> plays</p>
-      <img src={"/archivee_minimap/#{@world.rowid}"} />
+    <div class="min-h-0 bg-base-100 rounded-md card card-compact shadow-md">
+      <figure class="bg-base-200 p-1.5">
+        <img class="shadow-lg" src={"/archivee_minimap/#{@world.rowid}"} />
+      </figure>
+      <div class="card-body !p-3 !py-1 gap-0">
+        <h4><%= @world.name %></h4>
+        <p><%= @world.plays %> plays</p>
+      </div>
+    </div>
+    """
+  end
+
+  attr :worlds, :list, required: true
+
+  def world_mural(assigns) do
+    ~H"""
+    <div class="flex flex-wrap justify-between items-start gap-x-2 gap-y-6 mt-2">
+      <.world_card :for={world <- @worlds} world={world} />
     </div>
     """
   end
@@ -92,6 +106,17 @@ defmodule EEWebArchiveWeb.Components do
         <%= render_slot(@items) %>
       </ul>
     </li>
+    """
+  end
+
+  attr :data, :list
+  slot :inner_block
+
+  def empty_list(assigns) do
+    ~H"""
+    <%= if Enum.empty?(@data) or @data == nil do %>
+      <%= render_slot(@inner_block) %>
+    <% end %>
     """
   end
 end

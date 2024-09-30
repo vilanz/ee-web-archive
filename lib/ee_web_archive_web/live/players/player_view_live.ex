@@ -26,17 +26,24 @@ defmodule EEWebArchiveWeb.PlayerViewLive do
         <h2>Crews</h2>
         <div class="flex flex-wrap gap-2">
           <.crew_link :for={crew <- @player.crews} crew={crew} />
+          <.empty_list data={@player.crews}>
+            No crews found.
+          </.empty_list>
         </div>
         <h2>Friends</h2>
         <div class="flex flex-wrap gap-2">
           <.player_link :for={friend <- @player.friends} player={friend} />
+          <.empty_list data={@player.friends}>
+            No friends found. :(
+          </.empty_list>
         </div>
       </div>
       <div>
         <h1>Worlds</h1>
-        <div class="flex flex-wrap justify-around gap-6 mt-4">
-          <.world_card :for={world <- @player.worlds} world={world} />
-        </div>
+        <.empty_list data={@player.worlds}>
+          No worlds found.
+        </.empty_list>
+        <.world_mural worlds={@player.worlds} />
       </div>
     </div>
     """

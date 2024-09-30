@@ -8,9 +8,7 @@ defmodule EEWebArchiveWeb.HomeViewLive do
       <h4>Welcome to the EE Web Archive!</h4>
       <div>
         <h2>Worlds</h2>
-        <div class="flex flex-wrap justify-around gap-6 mt-4">
-          <.world_card :for={world <- @featured_worlds} world={world} />
-        </div>
+        <.world_mural worlds={@featured_worlds} />
       </div>
     </div>
     """

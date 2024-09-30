@@ -1,5 +1,5 @@
 <div class="flex w-full h-full">
-  <aside class="menu max-w-[300px] bg-base-300 gap-2 font-bold p-4 pt-6">
+  <aside class="menu max-w-[300px] bg-base-100 gap-2 font-bold p-4 pt-6">
     <li>
       <h1 class="whitespace-nowrap ">
         <.link to={~p"/"}>
@@ -58,7 +58,7 @@
     </.submenu>
   </aside>
   <.flash_group flash={@flash} />
-  <main class="p-6 w-full h-full overflow-auto">
+  <main class="p-6 w-full h-full overflow-auto bg-base-300">
     <%= @inner_content %>
   </main>
 </div>

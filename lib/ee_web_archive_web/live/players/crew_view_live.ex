@@ -14,9 +14,7 @@ defmodule EEWebArchiveWeb.CrewViewLive do
         <%= member.name %> ::
       </.link>
       <h1>Worlds</h1>
-      <span :for={world <- @crew.worlds}>
-        <%= world.name %> ::
-      </span>
+      <.world_mural worlds={@crew.worlds} />
     </div>
     """
   end

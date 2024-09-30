@@ -18,11 +18,7 @@ defmodule EEWebArchiveWeb.UserForgotPasswordLive do
             Send password reset instructions
           </.button>
         </:actions>
-      </.simple_form>
-      <p class="text-center text-sm mt-4">
-        <.link navigate={~p"/users/register"}>Register</.link>
-        | <.link navigate={~p"/users/log_in"}>Log in</.link>
-      </p>
+      </.simple_form>W
     </div>
     """
   end

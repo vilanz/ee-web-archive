@@ -14,11 +14,11 @@ module.exports = {
   daisyui: {
     themes: [{
       ee: {
-        "primary": "#facc15",
+        "primary": "#f28c18",
         "secondary": "#60a5fa",
         "accent": "#34d399",
-        "neutral": "#44403c",
-        "base-100": "#292524",
+        "neutral": "#1b1d1d",
+        "base-100": "#1f1f1f",
         "info": "#fef08a",
         "success": "#22c55e",
         "warning": "#fde047",
