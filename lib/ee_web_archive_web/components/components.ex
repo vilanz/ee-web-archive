@@ -49,6 +49,7 @@ defmodule EEWebArchiveWeb.Components do
 
   attr :rest, :global
   attr :class, :string, default: ""
+  attr :navigate, :string
   slot :inner_block
 
   def menu_link(assigns) do
