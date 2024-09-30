@@ -5,12 +5,6 @@ const plugin = require("tailwindcss/plugin")
 const fs = require("fs")
 const path = require("path")
 
-const round = (num) =>
-  num
-    .toFixed(7)
-    .replace(/(\.[0-9]+?)0+$/, '$1')
-    .replace(/\.0$/, '')
-
 module.exports = {
   content: [
     "./js/**/*.js",
@@ -18,7 +12,19 @@ module.exports = {
     "../lib/ee_web_archive_web/**/*.*ex"
   ],
   daisyui: {
-    themes: ["dark"],
+    themes: [{
+      ee: {
+        "primary": "#facc15",
+        "secondary": "#60a5fa",
+        "accent": "#34d399",
+        "neutral": "#44403c",
+        "base-100": "#292524",
+        "info": "#fef08a",
+        "success": "#22c55e",
+        "warning": "#fde047",
+        "error": "#ff0000",
+      },
+    }],
   },
   plugins: [
     require("@tailwindcss/forms")({
