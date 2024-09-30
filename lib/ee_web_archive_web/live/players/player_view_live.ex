@@ -11,18 +11,17 @@ defmodule EEWebArchiveWeb.PlayerViewLive do
           <.smiley player_id={@player.id} scale={2} />
           <%= @player.name %>
         </h1>
-        <p>
-          <b>
-            Created at
-          </b>
-          <%= format_date(@player.created) %>
-        </p>
-        <p>
-          <b>
-            Last login at
-          </b>
-          <%= format_date(@player.last_login) %>
-        </p>
+        <h2>Info</h2>
+        <%= if @player.created do %>
+          <p>
+            Created at <%= format_date(@player.created) %>.
+          </p>
+        <% end %>
+        <%= if @player.last_login do %>
+          <p>
+            Last login at <%= format_date(@player.last_login) %>.
+          </p>
+        <% end %>
         <h2>Crews</h2>
         <div class="flex flex-wrap gap-2">
           <.crew_link :for={crew <- @player.crews} crew={crew} />
