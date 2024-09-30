@@ -10,7 +10,7 @@ defmodule EEWebArchiveWeb.Components do
   alias EEWebArchive.ArchivEE.World
   alias EEWebArchive.ArchivEE.Player
 
-  attr :player, Player
+  attr :player, Player, required: true
 
   def player_link(assigns) do
     ~H"""
@@ -23,7 +23,7 @@ defmodule EEWebArchiveWeb.Components do
     """
   end
 
-  attr :crew, Crew
+  attr :crew, Crew, required: true
 
   def crew_link(assigns) do
     ~H"""
@@ -35,7 +35,7 @@ defmodule EEWebArchiveWeb.Components do
     """
   end
 
-  attr :world, World
+  attr :world, World, required: true
 
   def world_card(assigns) do
     ~H"""
@@ -47,15 +47,15 @@ defmodule EEWebArchiveWeb.Components do
     """
   end
 
+  attr :to, :string, required: true
   attr :rest, :global
   attr :class, :string, default: ""
-  attr :navigate, :string
   slot :inner_block
 
   def menu_link(assigns) do
     ~H"""
     <li>
-      <.link class={"link no-underline hover-blue-500 " <> @class} {@rest}>
+      <.link class={"link no-underline hover-blue-500 " <> @class} navigate={@to} {@rest}>
         <%= render_slot(@inner_block) %>
       </.link>
     </li>

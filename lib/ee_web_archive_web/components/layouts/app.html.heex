@@ -2,13 +2,13 @@
   <aside class="menu max-w-[300px] bg-base-300 gap-2 font-bold p-4 pt-6">
     <li>
       <h1 class="whitespace-nowrap ">
-        <.link navigate={~p"/"}>
+        <.link to={~p"/"}>
           EE Web Archive
         </.link>
       </h1>
     </li>
-    <.menu_link navigate={~p"/players"}>Players</.menu_link>
-    <.menu_link navigate={~p"/worlds"}>Worlds</.menu_link>
+    <.menu_link to={~p"/players"}>Players</.menu_link>
+    <.menu_link to={~p"/worlds"}>Worlds</.menu_link>
     <.submenu>
       <:header>
         User area
@@ -20,17 +20,17 @@
               Hi, <%= @current_user.name %>!
             </p>
           </li>
-          <.menu_link navigate={~p"/users/settings"}>
+          <.menu_link to={~p"/users/settings"}>
             Settings
           </.menu_link>
-          <.menu_link navigate={~p"/users/log_out"} method="delete">
+          <.menu_link to={~p"/users/log_out"} method="delete">
             Log out
           </.menu_link>
         <% else %>
-          <.menu_link navigate={~p"/users/register"}>
+          <.menu_link to={~p"/users/register"}>
             Register
           </.menu_link>
-          <.menu_link navigate={~p"/users/log_in"}>
+          <.menu_link to={~p"/users/log_in"}>
             Log in
           </.menu_link>
         <% end %>
@@ -41,14 +41,11 @@
         About
       </:header>
       <:items>
-        <.menu_link
-          navigate="https://forums.everybodyedits.com/viewtopic.php?id=47779"
-          target="_blank"
-        >
+        <.menu_link to="https://forums.everybodyedits.com/viewtopic.php?id=47779" target="_blank">
           Forum thread
         </.menu_link>
         <.menu_link
-          navigate="https://github.com/vilanz/ee-web-archive"
+          to="https://github.com/vilanz/ee-web-archive"
           target="_blank"
           class="flex items-center gap-2"
         >
