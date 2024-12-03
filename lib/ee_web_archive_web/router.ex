@@ -24,10 +24,12 @@ defmodule EEWebArchiveWeb.Router do
     get "/smileys/:player_id", SmileyController, :by_player
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", EEWebArchiveWeb do
-  #   pipe_through :api
-  # end
+  scope "/api", EEWebArchiveWeb do
+    pipe_through :api
+
+    get "/worlds/download/:world_rowid", WorldController, :download_world
+    get "/worlds/info/:world_rowid", WorldController, :world_info
+  end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development
   if Application.compile_env(:ee_web_archive, :dev_routes) do

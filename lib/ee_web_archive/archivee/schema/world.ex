@@ -2,6 +2,8 @@ defmodule EEWebArchive.ArchivEE.World do
   alias EEWebArchive.ArchivEE
   use Ecto.Schema
 
+  @derive {Jason.Encoder, except: [:__meta__, :data_entity, :owning_player, :owning_crew]}
+
   @type t :: %__MODULE__{}
 
   @primary_key {:rowid, :integer, autogenerate: false}

@@ -1,7 +1,8 @@
 defmodule EEWebArchive.ArchivEE.WorldData do
+  alias EEWebArchive.ArchivEE
   use Ecto.Schema
 
-  alias EEWebArchive.ArchivEE
+  @derive {Jason.Encoder, except: [:__meta__, :world]}
 
   @type t :: %__MODULE__{}
 
