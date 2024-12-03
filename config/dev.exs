@@ -1,14 +1,14 @@
 import Config
 
 # Configure your database
-config :ee_web_archive, EEWebArchive.MainRepo,
-  username: "postgres",
-  password: "postgres",
-  hostname: "localhost",
-  database: "ee_web_archive_dev_",
-  stacktrace: true,
-  show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+# config :ee_web_archive, EEWebArchive.MainRepo,
+#   username: "postgres",
+#   password: "postgres",
+#   hostname: "localhost",
+#   database: "ee_web_archive_dev_",
+#   stacktrace: true,
+#   show_sensitive_data_on_connection_error: true,
+#   pool_size: 10
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
@@ -89,4 +89,5 @@ config :ee_web_archive, EEWebArchive.ArchivEERepo,
   database: "./priv/data/ArchivEE.sqlite3",
   load_extensions: ["./priv/data/libsqlite_zstd.so"]
 
+# Local
 config :ee_web_archive, EEWebArchive.SmileyRepo, database: "./priv/data/smileys.sqlite3"

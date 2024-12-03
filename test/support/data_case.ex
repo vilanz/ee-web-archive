@@ -18,7 +18,7 @@ defmodule EEWebArchive.DataCase do
 
   using do
     quote do
-      alias EEWebArchive.MainRepo
+      # alias EEWebArchive.MainRepo
 
       import Ecto
       import Ecto.Changeset
@@ -36,8 +36,8 @@ defmodule EEWebArchive.DataCase do
   Sets up the sandbox based on the test tags.
   """
   def setup_sandbox(tags) do
-    pid = Ecto.Adapters.SQL.Sandbox.start_owner!(EEWebArchive.MainRepo, shared: not tags[:async])
-    on_exit(fn -> Ecto.Adapters.SQL.Sandbox.stop_owner(pid) end)
+    # pid = Ecto.Adapters.SQL.Sandbox.start_owner!(EEWebArchive.MainRepo, shared: not tags[:async])
+    # on_exit(fn -> Ecto.Adapters.SQL.Sandbox.stop_owner(pid) end)
   end
 
   @doc """
