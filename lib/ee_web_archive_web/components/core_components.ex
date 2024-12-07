@@ -17,7 +17,7 @@ defmodule EEWebArchiveWeb.CoreComponents do
   use Phoenix.Component
 
   alias Phoenix.LiveView.JS
-  import EEWebArchiveWeb.Gettext
+  use Gettext, backend: EEWebArchiveWeb.Gettext
 
   @doc """
   Renders a modal.

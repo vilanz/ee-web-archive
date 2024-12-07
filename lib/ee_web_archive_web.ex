@@ -43,7 +43,7 @@ defmodule EEWebArchiveWeb do
         layouts: [html: EEWebArchiveWeb.Layouts]
 
       import Plug.Conn
-      import EEWebArchiveWeb.Gettext
+      use Gettext, backend: EEWebArchiveWeb.Gettext
 
       unquote(verified_routes())
     end
@@ -86,7 +86,7 @@ defmodule EEWebArchiveWeb do
       import Phoenix.HTML
       # Core UI components and translation
       import EEWebArchiveWeb.CoreComponents
-      import EEWebArchiveWeb.Gettext
+      use Gettext, backend: EEWebArchiveWeb.Gettext
 
       # _Our_ components
       import EEWebArchiveWeb.Components
