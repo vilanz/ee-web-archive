@@ -46,6 +46,7 @@ defmodule EEWebArchiveWeb.Components do
       <div class="card-body !p-3 !py-1 gap-0">
         <h4><%= @world.name %></h4>
         <p><%= @world.plays %> plays</p>
+        <a href={"/api/worlds/download/#{@world.rowid}"}>Download</a>
       </div>
     </div>
     """

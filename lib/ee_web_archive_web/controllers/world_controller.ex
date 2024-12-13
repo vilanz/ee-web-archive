@@ -6,7 +6,12 @@ defmodule EEWebArchiveWeb.WorldController do
   def download_world(conn, %{"world_rowid" => world_rowid}) do
     map_data = Worlds.get_map_data(world_rowid)
 
+    world = Worlds.get_by_rowid(world_rowid)
+      |> Worlds.preload_owning_player
+    filename = "#{world.name} - #{world.owning_player.name}"
+
     conn
+    |> put_resp_header("content-disposition", "attachment; filename=\"#{filename}\"")
     |> send_resp(200, map_data)
   end
 

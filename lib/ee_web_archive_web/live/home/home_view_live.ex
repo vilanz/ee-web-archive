@@ -7,7 +7,7 @@ defmodule EEWebArchiveWeb.HomeViewLive do
     <div class="flex flex-col items-center h-full">
       <h4>Welcome to the EE Web Archive!</h4>
       <div>
-        <h2>Worlds</h2>
+        <h2>Random assorted worlds?</h2>
         <.world_mural worlds={@featured_worlds} />
       </div>
     </div>
