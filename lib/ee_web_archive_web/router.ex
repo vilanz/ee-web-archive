@@ -89,7 +89,7 @@ defmodule EEWebArchiveWeb.Router do
 
       live "/crews/:id", CrewViewLive, :new
 
-      live "/worlds", WorldHomeViewLive, :new
+      # live "/worlds", WorldHomeViewLive, :new
     end
   end
 end
