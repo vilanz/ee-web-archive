@@ -86,8 +86,13 @@ config :swoosh, :api_client, false
 
 # Local ArchivEE database config
 config :ee_web_archive, EEWebArchive.ArchivEERepo,
-  database: "/var/lib/ee-web-archive/ArchivEE.sqlite3",
-  load_extensions: ["/var/lib/ee-web-archive/libsqlite_zstd.so"]
+  username: "postgres",
+  password: "postgres",
+  hostname: "localhost",
+  database: "eewa_1",
+  stacktrace: true,
+  show_sensitive_data_on_connection_error: true,
+  pool_size: 10
 
 # Local
 config :ee_web_archive, EEWebArchive.SmileyRepo, database: "/var/lib/ee-web-archive/smiley.sqlite3"
