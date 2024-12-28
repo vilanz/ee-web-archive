@@ -1,6 +1,7 @@
 defmodule EEWebArchive.ArchivEE.Players do
   import Ecto.Query
 
+  alias EEWebArchive.ArchivEE
   alias EEWebArchive.ArchivEERepo
   alias EEWebArchive.ArchivEE.Player
   alias EEWebArchive.ArchivEE.World
@@ -18,10 +19,11 @@ defmodule EEWebArchive.ArchivEE.Players do
 
   @spec preload_worlds(%Player{}) :: %Player{worlds: list(%World{})}
   def preload_worlds(player) do
-    ArchivEERepo.preload(player, worlds: [:data_entity])
+    worlds_ordered_by_plays = from(w in ArchivEE.World, order_by: [desc: w.plays])
+    ArchivEERepo.preload(player, worlds: {worlds_ordered_by_plays, [:data_entity]})
   end
 
-  @spec preload_worlds(%Player{}) ::
+  @spec preload_friends(%Player{}) ::
           %Player{friends: list(%Player{})}
   def preload_friends(player) do
     ArchivEERepo.preload(player, :friends)
