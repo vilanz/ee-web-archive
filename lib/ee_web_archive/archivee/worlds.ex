@@ -33,12 +33,13 @@ defmodule EEWebArchive.ArchivEE.Worlds do
     data
   end
 
-  def list_most_played() do
-    query =
-      from w in World,
-        order_by: [desc: :plays],
-        limit: 10
-
+  def list_frequently_played_at_random() do
+    random_worlds_query = from w in World,
+      order_by: fragment("RANDOM()"),
+      where: w.plays > 10000,
+      limit: 20
+    query = from rw in subquery(random_worlds_query),
+      order_by: [desc: rw.plays]
     ArchivEERepo.all(query)
   end
 
