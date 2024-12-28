@@ -42,9 +42,9 @@ if config_env() == :prod do
   # to check this value into version control, so we use an environment
   # variable instead.
   secret_key_base =
-    System.get_env("SECRET_KEY_BASE") ||
+    System.get_env("SECRET_KEY_BASE_EEARCHIVE") ||
       raise """
-      environment variable SECRET_KEY_BASE is missing.
+      environment variable SECRET_KEY_BASE_EEARCHIVE is missing.
       You can generate one by calling: mix phx.gen.secret
       """
 
@@ -54,7 +54,7 @@ if config_env() == :prod do
   config :ee_web_archive, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
 
   config :ee_web_archive, EEWebArchiveWeb.Endpoint,
-    url: [host: host, port: 443, scheme: "https"],
+    url: [host: host, port: port, scheme: "https"],
     http: [
       # Enable IPv6 and bind on all interfaces.
       # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.
