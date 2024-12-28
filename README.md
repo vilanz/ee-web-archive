@@ -6,7 +6,7 @@
 ## Running the project
 
 - Run `sudo ./setup.sh` to set up the Everybody Edits data locally. **Needs Python 3 and pip.**
-- Install [`asdf`](https://asdf-vm.com/) to manage Elixir/Erlang versions.
+- Install [`asdf`](https://asdf-vm.com/) and run `asdf install` to install the Elixir + Erlang versions specified in `.tool-versions`.
 - Run `mix setup` to install and setup dependencies.
 - Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`.
 
