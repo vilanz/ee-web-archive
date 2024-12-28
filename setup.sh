@@ -8,6 +8,9 @@ chown :ee-web-archive-group /var/lib/ee-web-archive
 setfacl -dm g:ee-web-archive-group:rwx /var/lib/ee-web-archive
 setfacl -m g:ee-web-archive-group:rwx /var/lib/ee-web-archive
 
+echo "-- Creating default dirs... --"
+mkdir /var/lib/ee-web-archive/archivee-minimaps
+
 echo "-- Installing gdown... ---"
 pip install gdown
 echo "-- Downloading sqlite-zstd... --"
