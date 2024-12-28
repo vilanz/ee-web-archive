@@ -8,7 +8,7 @@ defmodule EEWebArchiveWeb.WorldController do
 
     world = Worlds.get_by_id(world_id)
       |> Worlds.preload_owning_player
-    filename = "#{world.name} - #{world.owning_player.name}"
+    filename = "#{world.name} - #{world.owning_player.name}.eelvl"
 
     conn
     |> put_resp_header("content-disposition", "attachment; filename=\"#{filename}\"")
