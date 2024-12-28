@@ -41,12 +41,12 @@ defmodule EEWebArchiveWeb.Components do
     ~H"""
     <div class="min-h-0 bg-base-100 rounded-md card card-compact shadow-md">
       <figure class="bg-base-200 p-1.5">
-        <img class="shadow-lg" src={"/archivee_minimap/#{@world.rowid}"} />
+        <img class="shadow-lg" src={"/archivee_minimap/#{@world.id}"} />
       </figure>
       <div class="card-body !p-3 !py-1 gap-0">
         <h4><%= @world.name %></h4>
         <p><%= @world.plays %> plays</p>
-        <a href={"/api/worlds/download/#{@world.rowid}"}>Download</a>
+        <a href={"/api/worlds/download/#{@world.id}"}>Download</a>
       </div>
     </div>
     """

@@ -20,15 +20,15 @@ defmodule EEWebArchiveWeb.Router do
   scope "/", EEWebArchiveWeb do
     pipe_through :browser
 
-    get "/archivee_minimap/:world_rowid", MinimapController, :archivee_minimap
+    get "/archivee_minimap/:world_id", MinimapController, :archivee_minimap
     get "/smileys/:player_id", SmileyController, :by_player
   end
 
   scope "/api", EEWebArchiveWeb do
     pipe_through :api
 
-    get "/worlds/download/:world_rowid", WorldController, :download_world
-    get "/worlds/info/:world_rowid", WorldController, :world_info
+    get "/worlds/download/:world_id", WorldController, :download_world
+    get "/worlds/info/:world_id", WorldController, :world_info
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development

@@ -4,9 +4,9 @@ defmodule EEWebArchive.ArchivEE.Worlds do
   alias EEWebArchive.ArchivEERepo
   alias EEWebArchive.ArchivEE.World
 
-  @spec get_by_rowid(integer()) :: World.t()
-  def get_by_rowid(rowid) do
-    ArchivEERepo.get_by(World, rowid: rowid)
+  @spec get_by_id(integer()) :: World.t()
+  def get_by_id(id) do
+    ArchivEERepo.get_by(World, id: id)
   end
 
   def preload_owning_player(world) do
@@ -18,16 +18,16 @@ defmodule EEWebArchive.ArchivEE.Worlds do
   end
 
   @spec get_map_data(integer()) :: bitstring()
-  def get_map_data(world_rowid) do
+  def get_map_data(world_id) do
     %{rows: [[data]]} =
       ArchivEERepo.query!(
         """
           SELECT zstd_decompress(d.data, false, 1, true)
           FROM world w
           JOIN _world_data_zstd d ON w.data_ref = d.rowid
-          WHERE w.rowid == ?
+          WHERE w.id == ?
         """,
-        [world_rowid]
+        [world_id]
       )
 
     data

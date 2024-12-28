@@ -19,7 +19,7 @@ defmodule EEWebArchive.ArchivEE.Minimaps.Minimap do
     |> Pngex.generate(image |> :array.to_list())
   end
 
-  def path(world_rowid) do
-    "/var/lib/ee-web-archive/archivee-minimaps/#{world_rowid}.png"
+  def path(world_id) do
+    "/var/lib/ee-web-archive/archivee-minimaps/#{world_id}.png"
   end
 end

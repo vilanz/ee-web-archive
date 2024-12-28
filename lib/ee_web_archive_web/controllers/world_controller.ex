@@ -3,10 +3,10 @@ defmodule EEWebArchiveWeb.WorldController do
 
   alias EEWebArchive.ArchivEE.Worlds
 
-  def download_world(conn, %{"world_rowid" => world_rowid}) do
-    map_data = Worlds.get_map_data(world_rowid)
+  def download_world(conn, %{"world_id" => world_id}) do
+    map_data = Worlds.get_map_data(world_id)
 
-    world = Worlds.get_by_rowid(world_rowid)
+    world = Worlds.get_by_id(world_id)
       |> Worlds.preload_owning_player
     filename = "#{world.name} - #{world.owning_player.name}"
 
@@ -15,8 +15,8 @@ defmodule EEWebArchiveWeb.WorldController do
     |> send_resp(200, map_data)
   end
 
-  def world_info(conn, %{"world_rowid" => world_rowid}) do
-    world = Worlds.get_by_rowid(world_rowid)
+  def world_info(conn, %{"world_id" => world_id}) do
+    world = Worlds.get_by_id(world_id)
 
     conn
     |> json(world)
