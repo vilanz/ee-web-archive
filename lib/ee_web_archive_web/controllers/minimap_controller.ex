@@ -11,7 +11,7 @@ defmodule EEWebArchiveWeb.MinimapController do
     if File.exists?(minimap_path) do
       conn
         |> add_minimap_cache_header()
-        |> redirect(to: minimap_path)
+        |> send_file(200, minimap_path)
     else
       world = Worlds.get_by_id(world_id)
 
@@ -23,7 +23,7 @@ defmodule EEWebArchiveWeb.MinimapController do
         :ok ->
           conn
             |> add_minimap_cache_header()
-            |> redirect(to: minimap_path)
+            |> send_file(200, minimap_path)
 
         {:error, reason} ->
           :logger.error("Failed to save ArchivEE minimap for world #{world_id}: #{reason}")
