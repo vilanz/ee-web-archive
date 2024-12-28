@@ -20,6 +20,6 @@ defmodule EEWebArchive.ArchivEE.Minimaps.Minimap do
   end
 
   def path(world_rowid) do
-    "/srv/ee-web-archive/archivee-minimaps/#{world_rowid}.png"
+    "/var/lib/ee-web-archive/archivee-minimaps/#{world_rowid}.png"
   end
 end
