@@ -6,39 +6,40 @@ defmodule EEWebArchiveWeb.PlayerViewLive do
   def render(assigns) do
     ~H"""
     <div class="flex gap-2">
-      <div class="basis-[350px] shrink-0">
+      <div class="basis-[350px] shrink-0 flex flex-col gap-2">
         <h1>
           <.smiley player_id={@player.id} scale={2} />
           <%= @player.name %>
         </h1>
-        <h2>Info</h2>
-        <%= if @player.created do %>
+        <div>
           <p>
-            Created at <%= format_date(@player.created) %>.
+            Joined: <b><%= format_date(@player.created) %></b>
           </p>
-        <% end %>
-        <%= if @player.last_login do %>
           <p>
-            Last login at <%= format_date(@player.last_login) %>.
+            Last login: <b><%= format_date(@player.last_login) %></b>
           </p>
-        <% end %>
-        <h2>Crews</h2>
-        <div class="flex flex-wrap gap-2">
-          <.crew_link :for={crew <- @player.crews} crew={crew} />
-          <.empty_list data={@player.crews}>
-            No crews found.
-          </.empty_list>
         </div>
-        <h2>Friends</h2>
-        <div class="flex flex-wrap gap-2">
-          <.player_link :for={friend <- @player.friends} player={friend} />
-          <.empty_list data={@player.friends}>
-            No friends found. :(
-          </.empty_list>
+        <div>
+          <h2>Crews: <%= length(@player.crews) %></h2>
+          <div class="flex flex-wrap gap-2">
+            <.crew_link :for={crew <- @player.crews} crew={crew} />
+            <.empty_list data={@player.crews}>
+              No crews :(
+            </.empty_list>
+          </div>
+        </div>
+        <div>
+          <h2>Friends: <%= length(@player.friends) %></h2>
+          <div class="flex flex-wrap gap-2">
+            <.player_link :for={friend <- @player.friends} player={friend} />
+            <.empty_list data={@player.friends}>
+              No friends found. :(
+            </.empty_list>
+          </div>
         </div>
       </div>
       <div>
-        <h1>Worlds</h1>
+        <h1>Worlds: <%= length(@player.worlds) %></h1>
         <.empty_list data={@player.worlds}>
           No worlds found.
         </.empty_list>

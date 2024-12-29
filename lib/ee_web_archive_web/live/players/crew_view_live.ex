@@ -5,16 +5,23 @@ defmodule EEWebArchiveWeb.CrewViewLive do
 
   def render(assigns) do
     ~H"""
-    <div>
+    <div class="flex flex-col gap-4">
+      <h1>
+        <%= @crew.name %>
+      </h1>
       <div>
-        Name: <%= @crew.name %>
+        <h3>Members: <%= length(@crew.members) %></h3>
+        <div class="flex flex-wrap gap-2">
+          <.player_link :for={member <- @crew.members} player={member} />
+          <.empty_list data={@crew.members}>
+            No players...? What??
+          </.empty_list>
+        </div>
       </div>
-      <h1>Members</h1>
-      <.link :for={member <- @crew.members} class="link" navigate={~p"/players/#{member.name}"}>
-        <%= member.name %> ::
-      </.link>
-      <h1>Worlds</h1>
-      <.world_mural worlds={@crew.worlds} />
+      <div>
+        <h3>Worlds: <%= length(@crew.worlds) %></h3>
+        <.world_mural worlds={@crew.worlds} />
+      </div>
     </div>
     """
   end

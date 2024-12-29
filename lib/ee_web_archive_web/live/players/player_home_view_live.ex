@@ -1,6 +1,7 @@
 defmodule EEWebArchiveWeb.PlayerHomeViewLive do
-  alias EEWebArchive.ArchivEE.Players
   use EEWebArchiveWeb, :live_view
+
+  alias EEWebArchive.ArchivEE.Players
 
   def render(assigns) do
     ~H"""

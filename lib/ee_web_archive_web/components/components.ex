@@ -28,7 +28,7 @@ defmodule EEWebArchiveWeb.Components do
   def crew_link(assigns) do
     ~H"""
     <div class="">
-      <.link class="chip" navigate={~p"/crews/#{@crew.id}"}>
+      <.link class="chip px-1" navigate={~p"/crews/#{@crew.id}"}>
         <%= @crew.name %>
       </.link>
     </div>
@@ -39,14 +39,21 @@ defmodule EEWebArchiveWeb.Components do
 
   def world_card(assigns) do
     ~H"""
-    <div class="min-h-0 bg-base-100 rounded-md card card-compact shadow-md">
-      <figure class="bg-base-200 p-1.5">
+    <div class="min-h-0 bg-base-100 rounded-lg card card-compact shadow-md">
+      <figure class="bg-base-300 p-1.5">
         <img class="shadow-lg" src={"/archivee_minimap/#{@world.id}"} />
       </figure>
-      <div class="card-body !p-3 !py-1 gap-0">
+      <div class="card-body !p-3 gap-1">
         <h4><%= @world.name %></h4>
         <p><%= @world.plays %> plays</p>
-        <a href={"/api/worlds/download/#{@world.id}"}>Download</a>
+        <div>
+          <a type="button" class="btn btn-xs btn-primary" href={"https://pixelwalker.net/world/legacy:#{@world.id}"}>
+            Play
+          </a>
+          <a type="button" class="btn btn-xs" href={"/api/worlds/download/#{@world.id}"}>
+            Download
+          </a>
+        </div>
       </div>
     </div>
     """

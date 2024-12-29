@@ -8,23 +8,23 @@
     </div>
     <.menu_link to={~p"/"}>Home</.menu_link>
     <.menu_link to={~p"/players"}>Players</.menu_link>
-    <.external_menu_link href="https://pixelwalker.net/" class="text-amber-400">Play PixelWalker</.external_menu_link>
+    <.external_menu_link href="https://pixelwalker.net/" class="text-primary">PixelWalker 🔗</.external_menu_link>
     <.menu_link to="https://forums.everybodyedits.com/viewtopic.php?id=47779" target="_blank">
-      Forum thread
+      Forum thread 🔗
     </.menu_link>
     <.menu_link
       to="https://github.com/vilanz/ee-web-archive"
       target="_blank"
       class="flex items-center gap-2"
     >
-      <span>
-        GitHub
-      </span>
       <img src={~p"/images/github.svg"} class="opacity-75" width="20" />
+      <span>
+        GitHub 🔗
+      </span>
     </.menu_link>
   </aside>
   <.flash_group flash={@flash} />
-  <main class="p-6 w-full h-full overflow-auto bg-base-300">
+  <main class="p-6 w-full h-full overflow-auto bg-neutral-950">
     <%= @inner_content %>
   </main>
 </div>
