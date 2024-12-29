@@ -43,7 +43,7 @@ defmodule EEWebArchiveWeb.Components do
     ~H"""
     <div class="min-h-0 bg-neutral-950 rounded-lg card card-compact shadow-lg text-md">
       <figure class="bg-black p-4">
-        <img class="shadow-lg" src={"/archivee_minimap/#{@world.id}"} loading="lazy" />
+        <img class="shadow-lg" src={"/archivee_minimap/#{@world.id}"} height={@world.height} loading="lazy"  />
       </figure>
       <div class="card-body !p-4 gap-3">
         <h4><%= @world.name %></h4>

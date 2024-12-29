@@ -5,7 +5,7 @@ defmodule EEWebArchiveWeb.HomeViewLive do
 
   def render(assigns) do
     ~H"""
-    <div class="flex flex-col h-full">
+    <div class="flex flex-col">
       <h3>Welcome to the EE Web Archive v2 beta!</h3>
       <div>
         <div class="flex items-center gap-4">
