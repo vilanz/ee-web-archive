@@ -12,7 +12,7 @@ defmodule EEWebArchiveWeb.CrewViewLive do
       <div>
         <h3>Members: <%= length(@crew.members) %></h3>
         <div class="flex flex-wrap gap-2">
-          <.player_link :for={member <- @crew.members} player={member} />
+          <.player_link :for={member <- @crew.members} player={member} highlight={member.rowid == @crew.owner} />
           <.empty_list data={@crew.members}>
             No players...? What??
           </.empty_list>
@@ -31,6 +31,7 @@ defmodule EEWebArchiveWeb.CrewViewLive do
       Crews.get_by_id(id)
       |> Crews.preload_members()
       |> Crews.preload_worlds()
+      |> Crews.place_owner_first()
 
     {:ok, assign(socket, crew: crew, page_title: crew.name)}
   end

@@ -18,4 +18,9 @@ defmodule EEWebArchive.ArchivEE.Crews do
   def preload_worlds(crew) do
     ArchivEERepo.preload(crew, worlds: [:data_entity])
   end
+
+  def place_owner_first(crew) do
+    {owner, others} = Enum.split_with(crew.members, fn member -> member.rowid == crew.owner end)
+    %{crew | members: owner ++ others}
+  end
 end

@@ -11,11 +11,12 @@ defmodule EEWebArchiveWeb.Components do
   alias EEWebArchive.ArchivEE.Player
 
   attr :player, Player, required: true
+  attr :highlight, :boolean, default: false
 
   def player_link(assigns) do
     ~H"""
     <div class="">
-      <.link class="chip" navigate={~p"/players/#{@player.name}"}>
+      <.link class={["chip", @highlight && "chip-highlight"]} navigate={~p"/players/#{@player.name}"}>
         <.smiley player_id={@player.id} />
         <%= @player.name %>
       </.link>
@@ -36,17 +37,30 @@ defmodule EEWebArchiveWeb.Components do
   end
 
   attr :world, World, required: true
+  attr :show_owner, :boolean, default: false
 
   def world_card(assigns) do
     ~H"""
-    <div class="min-h-0 bg-base-100 rounded-lg card card-compact shadow-md">
-      <figure class="bg-base-300 p-1.5">
+    <div class="min-h-0 bg-base-100 rounded-lg card card-compact shadow-md text-md">
+      <figure class="bg-base-300 p-4">
         <img class="shadow-lg" src={"/archivee_minimap/#{@world.id}"} />
       </figure>
-      <div class="card-body !p-3 gap-1">
+      <div class="card-body !p-4 gap-3">
         <h4><%= @world.name %></h4>
-        <p><%= @world.plays %> plays</p>
-        <div>
+        <div>Plays: <b><%= @world.plays %></b></div>
+        <%= if @show_owner do %>
+          <div class="flex items-center gap-2">
+            By
+            <%= cond do %>
+              <% @world.owner_player != nil -> %>
+                <.player_link player={@world.owner_player} />
+              <% @world.owner_crew != nil -> %>
+                <.crew_link crew={@world.owner_crew} />
+              <% true -> %> <span>No owner found</span>
+            <% end %>
+          </div>
+        <% end %>
+        <div class="flex gap-3">
           <a type="button" class="btn btn-xs btn-primary" href={"https://pixelwalker.net/world/legacy:#{@world.id}"}>
             Play
           </a>
@@ -60,11 +74,12 @@ defmodule EEWebArchiveWeb.Components do
   end
 
   attr :worlds, :list, required: true
+  attr :show_owner, :boolean, default: false
 
   def world_mural(assigns) do
     ~H"""
-    <div class="flex flex-wrap justify-between items-start gap-x-2 gap-y-6 mt-2">
-      <.world_card :for={world <- @worlds} world={world} />
+    <div class="flex flex-wrap justify-around items-center gap-2 gap-y-10 mt-2">
+      <.world_card :for={world <- @worlds} world={world} show_owner={@show_owner} />
     </div>
     """
   end

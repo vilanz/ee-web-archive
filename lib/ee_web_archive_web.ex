@@ -84,14 +84,16 @@ defmodule EEWebArchiveWeb do
     quote do
       # HTML escaping functionality
       import Phoenix.HTML
+
+      # _Our_ HTML helpers
+      import EEWebArchiveWeb.HTMLHelpers
+
       # Core UI components and translation
       import EEWebArchiveWeb.CoreComponents
       use Gettext, backend: EEWebArchiveWeb.Gettext
 
       # _Our_ components
       import EEWebArchiveWeb.Components
-      # _Our_ HTML helpers
-      import EEWebArchiveWeb.HTMLHelpers
 
       # Shortcut for generating JS commands
       alias Phoenix.LiveView.JS

@@ -9,12 +9,12 @@ defmodule EEWebArchive.ArchivEE.Worlds do
     ArchivEERepo.get_by(World, id: id)
   end
 
-  def preload_owning_player(world) do
-    ArchivEERepo.preload(world, :owning_player)
+  def preload_owner_player(world) do
+    ArchivEERepo.preload(world, :owner_player)
   end
 
-  def preload_owning_crew(world) do
-    ArchivEERepo.preload(world, :owning_crew)
+  def preload_owner_crew(world) do
+    ArchivEERepo.preload(world, :owner_crew)
   end
 
   @spec get_map_data(integer()) :: bitstring()

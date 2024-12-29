@@ -2,7 +2,7 @@ defmodule EEWebArchive.ArchivEE.World do
   alias EEWebArchive.ArchivEE
   use Ecto.Schema
 
-  @derive {Jason.Encoder, except: [:__meta__, :data_entity, :owning_player, :owning_crew]}
+  @derive {Jason.Encoder, except: [:__meta__, :data_entity, :owner_player, :owner_crew]}
 
   @type t :: %__MODULE__{}
 
@@ -24,9 +24,9 @@ defmodule EEWebArchive.ArchivEE.World do
     field :data_ref, :integer
     has_one :data_entity, ArchivEE.WorldData, foreign_key: :rowid, references: :data_ref
 
-    belongs_to :owning_player, ArchivEE.Player, foreign_key: :owner, references: :rowid
+    belongs_to :owner_player, ArchivEE.Player, foreign_key: :owner, references: :rowid
 
-    belongs_to :owning_crew, ArchivEE.Crew, foreign_key: :crew, references: :rowid
+    belongs_to :owner_crew, ArchivEE.Crew, foreign_key: :crew, references: :rowid
     field :crew_status, :integer
   end
 end
