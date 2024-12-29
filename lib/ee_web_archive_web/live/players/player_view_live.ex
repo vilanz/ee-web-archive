@@ -55,6 +55,6 @@ defmodule EEWebArchiveWeb.PlayerViewLive do
       |> Players.preload_friends()
       |> Players.preload_crews()
 
-    {:ok, assign(socket, player: player)}
+    {:ok, assign(socket, player: player, page_title: player.name)}
   end
 end

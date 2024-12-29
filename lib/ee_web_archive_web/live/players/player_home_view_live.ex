@@ -37,7 +37,8 @@ defmodule EEWebArchiveWeb.PlayerHomeViewLive do
      assign(socket,
        form: form,
        player_matches: [],
-       exact_player_match: nil
+       exact_player_match: nil,
+       page_title: "Players"
      )}
   end
 

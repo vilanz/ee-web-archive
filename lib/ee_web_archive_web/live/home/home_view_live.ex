@@ -22,7 +22,8 @@ defmodule EEWebArchiveWeb.HomeViewLive do
 
     {:ok,
      assign(socket,
-       featured_worlds: featured_worlds
+       featured_worlds: featured_worlds,
+       page_title: "Home"
      )}
   end
 

@@ -25,6 +25,6 @@ defmodule EEWebArchiveWeb.CrewViewLive do
       |> Crews.preload_members()
       |> Crews.preload_worlds()
 
-    {:ok, assign(socket, crew: crew)}
+    {:ok, assign(socket, crew: crew, page_title: crew.name)}
   end
 end
