@@ -5,7 +5,7 @@ defmodule EEWebArchiveWeb.PlayerHomeViewLive do
   def render(assigns) do
     ~H"""
     <div class="flex flex-col items-center w-full gap-4">
-      <div class="flex flex-col gap-2 w-full max-w-[400px] m-20">
+      <div class="flex flex-col gap-2 w-full max-w-[800px] m-20">
         <.simple_form for={@form} phx-submit="ignore_submit">
           <h4 class="text-center">Search for a specific player...</h4>
           <.input
