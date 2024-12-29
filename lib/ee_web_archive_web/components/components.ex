@@ -16,7 +16,7 @@ defmodule EEWebArchiveWeb.Components do
   def player_link(assigns) do
     ~H"""
     <div class="">
-      <.link class={["chip", @highlight && "chip-highlight"]} navigate={~p"/players/#{@player.name}"}>
+      <.link class={["chip shadow-sm", @highlight && "chip-highlight"]} navigate={~p"/players/#{@player.name}"}>
         <.smiley player_id={@player.id} />
         <%= @player.name %>
       </.link>
@@ -29,7 +29,7 @@ defmodule EEWebArchiveWeb.Components do
   def crew_link(assigns) do
     ~H"""
     <div class="">
-      <.link class="chip px-1" navigate={~p"/crews/#{@crew.id}"}>
+      <.link class="chip px-1 shadow-sm" navigate={~p"/crews/#{@crew.id}"}>
         <%= @crew.name %>
       </.link>
     </div>
@@ -41,8 +41,8 @@ defmodule EEWebArchiveWeb.Components do
 
   def world_card(assigns) do
     ~H"""
-    <div class="min-h-0 bg-base-100 rounded-lg card card-compact shadow-md text-md">
-      <figure class="bg-base-300 p-4">
+    <div class="min-h-0 bg-neutral-950 rounded-lg card card-compact shadow-lg text-md">
+      <figure class="bg-black p-4">
         <img class="shadow-lg" src={"/archivee_minimap/#{@world.id}"} />
       </figure>
       <div class="card-body !p-4 gap-3">
@@ -93,7 +93,7 @@ defmodule EEWebArchiveWeb.Components do
   def menu_link(assigns) do
     ~H"""
     <li>
-      <.link class={"link no-underline " <> @class} navigate={@to} {@rest}>
+      <.link class={"link no-underline bg-neutral-900 " <> @class} navigate={@to} {@rest}>
         <%= render_slot(@inner_block) %>
       </.link>
     </li>
@@ -108,7 +108,7 @@ defmodule EEWebArchiveWeb.Components do
   def external_menu_link(assigns) do
     ~H"""
     <li>
-      <.link class={"link no-underline " <> @class} href={@href} target="_blank" {@rest}>
+      <.link class={"link no-underline bg-neutral-900 " <> @class} href={@href} target="_blank" {@rest}>
         <%= render_slot(@inner_block) %>
       </.link>
     </li>

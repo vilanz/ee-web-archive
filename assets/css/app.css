@@ -15,11 +15,11 @@
 
 @layer components {
     .chip {
-        @apply flex items-center rounded-lg bg-neutral-800 border-neutral-700 border-2 h-[26px] pl-1 pr-2 no-underline shadow-md;
+        @apply flex items-center rounded-lg bg-neutral-900 border-neutral-800 border-2 h-[26px] pl-1 pr-2 no-underline shadow-md;
     }
 
     .chip-highlight {
-        @apply bg-sky-900 border-sky-400 text-white;
+        @apply bg-sky-900 border-sky-600 text-white;
     }
 }
 
@@ -51,6 +51,10 @@ h4 {
 p {
     margin-top: 0.25rem;
     margin-bottom: 0.25rem;
+}
+
+.bg-blocky {
+    background: url("/images/bgblock.png");
 }
 
 .smiley {

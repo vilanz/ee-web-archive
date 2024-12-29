@@ -1,9 +1,12 @@
-<div class="flex w-full h-full">
-  <aside class="menu max-w-[250px] gap-2 p-3 pt-6 font-bold bg-base-100">
-    <h1 class="whitespace-nowrap py-3 px-3">
-      EE Web Archive v2
-    </h1>
-    <div style="color: crimson" class="px-3 pointer-events-none">
+<div class="flex w-full h-full items-start bg-blocky">
+  <aside class="menu min-w-[250px] max-w-[350px] gap-2 p-3 font-bold bg-neutral-950 rounded-xl shadow-lg ml-6 mt-6">
+    <div class="flex items-center justify-center gap-1">
+      <img src={~p"/images/favicon.png"} class="h-[40px]" />
+      <h1 class="whitespace-nowrap !text-xl">
+        EE Web Archive 2
+      </h1>
+    </div>
+    <div class="text-[crimson] pointer-events-none text-center text-md">
       <h3>🚨 Early beta version!</h3>
     </div>
     <.menu_link to={~p"/"}>Home</.menu_link>
@@ -24,7 +27,7 @@
     </.menu_link>
   </aside>
   <.flash_group flash={@flash} />
-  <main class="p-6 w-full h-full overflow-auto bg-neutral-950">
+  <main class="p-6 w-full h-full overflow-auto">
     <%= @inner_content %>
   </main>
 </div>
