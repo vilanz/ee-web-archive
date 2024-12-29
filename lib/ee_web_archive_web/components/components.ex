@@ -62,7 +62,8 @@ defmodule EEWebArchiveWeb.Components do
     """
   end
 
-  attr :to, :string, required: true
+  attr :to, :string
+  attr :external_href, :string
   attr :rest, :global
   attr :class, :string, default: ""
   slot :inner_block
@@ -70,7 +71,22 @@ defmodule EEWebArchiveWeb.Components do
   def menu_link(assigns) do
     ~H"""
     <li>
-      <.link class={"link no-underline hover-blue-500 " <> @class} navigate={@to} {@rest}>
+      <.link class={"link no-underline " <> @class} navigate={@to} {@rest}>
+        <%= render_slot(@inner_block) %>
+      </.link>
+    </li>
+    """
+  end
+
+  attr :href, :string
+  attr :rest, :global
+  attr :class, :string, default: ""
+  slot :inner_block
+
+  def external_menu_link(assigns) do
+    ~H"""
+    <li>
+      <.link class={"link no-underline " <> @class} href={@href} target="_blank" {@rest}>
         <%= render_slot(@inner_block) %>
       </.link>
     </li>

@@ -1,61 +1,27 @@
 <div class="flex w-full h-full">
-  <aside class="menu max-w-[250px] bg-base-100 gap-2 p-3 pt-6">
-    <h1 class="whitespace-nowrap py-3 px-1">
+  <aside class="menu max-w-[250px] gap-2 p-3 pt-6 font-bold bg-base-100">
+    <h1 class="whitespace-nowrap py-3 px-3">
       EE Web Archive v2
     </h1>
-    <div style="color: crimson" class="px-2 pointer-events-none	">
-      <h3>Please note that this is an early beta version!</h3>
+    <div style="color: crimson" class="px-3 pointer-events-none">
+      <h3>🚨 Early beta version!</h3>
     </div>
     <.menu_link to={~p"/"}>Home</.menu_link>
     <.menu_link to={~p"/players"}>Players</.menu_link>
-    <%!-- <.menu_link to={~p"/worlds"}>Worlds</.menu_link> --%>
-    <%!-- <.submenu>
-      <:header>
-        User area
-      </:header>
-      <:items>
-        <%= if @current_user do %>
-          <li>
-            <p>
-              Hi, <%= @current_user.name %>!
-            </p>
-          </li>
-          <.menu_link to={~p"/users/settings"}>
-            Settings
-          </.menu_link>
-          <.menu_link to={~p"/users/log_out"} method="delete">
-            Log out
-          </.menu_link>
-        <% else %>
-          <.menu_link to={~p"/users/register"}>
-            Register
-          </.menu_link>
-          <.menu_link to={~p"/users/log_in"}>
-            Log in
-          </.menu_link>
-        <% end %>
-      </:items>
-    </.submenu> --%>
-    <.submenu>
-      <:header>
-        About
-      </:header>
-      <:items>
-        <.menu_link to="https://forums.everybodyedits.com/viewtopic.php?id=47779" target="_blank">
-          Forum thread
-        </.menu_link>
-        <.menu_link
-          to="https://github.com/vilanz/ee-web-archive"
-          target="_blank"
-          class="flex items-center gap-2"
-        >
-          <span>
-            GitHub
-          </span>
-          <img src={~p"/images/github.svg"} class="opacity-75" width="20" />
-        </.menu_link>
-      </:items>
-    </.submenu>
+    <.external_menu_link href="https://pixelwalker.net/" class="text-amber-400">Play PixelWalker</.external_menu_link>
+    <.menu_link to="https://forums.everybodyedits.com/viewtopic.php?id=47779" target="_blank">
+      Forum thread
+    </.menu_link>
+    <.menu_link
+      to="https://github.com/vilanz/ee-web-archive"
+      target="_blank"
+      class="flex items-center gap-2"
+    >
+      <span>
+        GitHub
+      </span>
+      <img src={~p"/images/github.svg"} class="opacity-75" width="20" />
+    </.menu_link>
   </aside>
   <.flash_group flash={@flash} />
   <main class="p-6 w-full h-full overflow-auto bg-base-300">
