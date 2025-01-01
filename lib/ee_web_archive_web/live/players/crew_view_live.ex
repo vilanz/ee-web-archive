@@ -33,6 +33,10 @@ defmodule EEWebArchiveWeb.CrewViewLive do
       |> Crews.preload_worlds()
       |> Crews.place_owner_first()
 
-    {:ok, assign(socket, crew: crew, page_title: crew.name)}
+    meta = %{
+      title: "Crew: #{crew.name} (EE Web Archive)"
+    }
+
+    {:ok, assign(socket, crew: crew, page_title: crew.name, meta: meta)}
   end
 end

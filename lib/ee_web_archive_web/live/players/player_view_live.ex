@@ -1,6 +1,7 @@
 defmodule EEWebArchiveWeb.PlayerViewLive do
   use EEWebArchiveWeb, :live_view
 
+  alias EEWebArchive.Smileys
   alias EEWebArchive.ArchivEE.Players
 
   def render(assigns) do
@@ -56,6 +57,13 @@ defmodule EEWebArchiveWeb.PlayerViewLive do
       |> Players.preload_friends()
       |> Players.preload_crews()
 
-    {:ok, assign(socket, player: player, page_title: player.name)}
+    smiley_path = Smileys.get_player_smiley_path(player.id)
+    full_smiley_path = unverified_url(socket, static_path(socket, smiley_path))
+    meta = %{
+      title: "Player: #{player.name} (EE Web Archive)",
+      image_path: full_smiley_path
+    }
+
+    {:ok, assign(socket, player: player, page_title: player.name, meta: meta)}
   end
 end

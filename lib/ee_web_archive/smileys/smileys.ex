@@ -11,4 +11,9 @@ defmodule EEWebArchive.Smileys do
       player_smiley.smiley_id
     end
   end
+
+  def get_player_smiley_path(player_id) do
+    smiley_id = get_player_smiley_id(player_id)
+    "/images/smileys/#{smiley_id}.png"
+  end
 end

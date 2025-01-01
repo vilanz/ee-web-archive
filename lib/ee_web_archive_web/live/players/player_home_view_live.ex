@@ -34,12 +34,17 @@ defmodule EEWebArchiveWeb.PlayerHomeViewLive do
   def mount(_params, _session, socket) do
     form = to_form(%{"player_query" => ""}, as: "form")
 
+    meta = %{
+      title: "Player search (EE Web Archive)"
+    }
+
     {:ok,
      assign(socket,
        form: form,
        player_matches: [],
        exact_player_match: nil,
-       page_title: "Players"
+       page_title: "Players",
+       meta: meta
      )}
   end
 
