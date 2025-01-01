@@ -17,6 +17,8 @@ defmodule EEWebArchiveWeb.WorldController do
 
   def world_info(conn, %{"world_id" => world_id}) do
     world = Worlds.get_by_id(world_id)
+      |> Worlds.preload_owner_player()
+      |> Worlds.add_owner_info_for_json()
 
     conn
     |> json(world)
