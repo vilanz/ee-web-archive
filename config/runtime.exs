@@ -48,13 +48,12 @@ if config_env() == :prod do
       You can generate one by calling: mix phx.gen.secret
       """
 
-  host = System.get_env("PHX_HOST") || "example.com"
   port = String.to_integer(System.get_env("PORT") || "4000")
 
   config :ee_web_archive, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
 
   config :ee_web_archive, EEWebArchiveWeb.Endpoint,
-    url: [host: host, port: port, scheme: "https"],
+    url: [host: "new.offlinee.com", port: port, scheme: "https"],
     http: [
       # Enable IPv6 and bind on all interfaces.
       # Set it to  {0, 0, 0, 0, 0, 0, 0, 1} for local network only access.
@@ -63,7 +62,11 @@ if config_env() == :prod do
       ip: {0, 0, 0, 0, 0, 0, 0, 0},
       port: port
     ],
-    secret_key_base: secret_key_base
+    secret_key_base: secret_key_base,
+    check_origin: [
+      "https://new.offlinee.com",
+      "https://test.offlinee.com"
+    ]
 
   # ## SSL Support
   #
