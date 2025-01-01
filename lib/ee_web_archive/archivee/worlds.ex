@@ -17,9 +17,13 @@ defmodule EEWebArchive.ArchivEE.Worlds do
     ArchivEERepo.preload(world, :owner_crew)
   end
 
+  def add_owner_info_for_json(%{owner_player: %{rowid: rowid, id: id, name: name }} = world) do
+    Map.put(world, :owner, %{rowid: rowid, id: id, username: name})
+  end
+
+  # If there's no owner_player info (e.g. world not found)
   def add_owner_info_for_json(world) do
-    %{rowid: rowid, id: id, name: name} = world.owner_player
-    Map.put(world, :owner, %{rowid: rowid, id: id, name: name})
+    world
   end
 
   @spec get_map_data(integer()) :: bitstring()

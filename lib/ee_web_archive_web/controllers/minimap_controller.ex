@@ -27,7 +27,8 @@ defmodule EEWebArchiveWeb.MinimapController do
 
         {:error, reason} ->
           :logger.error("Failed to save ArchivEE minimap for world #{world_id}: #{reason}")
-          put_status(conn, 500)
+          conn
+            |> send_resp(500, "Failed parsing or writing minimap")
       end
     end
   end
