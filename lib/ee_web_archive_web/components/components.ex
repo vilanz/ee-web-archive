@@ -61,10 +61,10 @@ defmodule EEWebArchiveWeb.Components do
           </div>
         <% end %>
         <div class="flex gap-3">
-          <a type="button" class="btn btn-xs btn-primary" href={"https://pixelwalker.net/world/legacy:#{@world.id}"}>
+          <a type="button" class="btn btn-xs btn-primary" href={"https://pixelwalker.net/world/legacy:#{@world.id}"} target="_blank">
             Play
           </a>
-          <a type="button" class="btn btn-xs" href={"/api/worlds/download/#{@world.id}"}>
+          <a type="button" class="btn btn-xs" href={"/api/worlds/download/#{@world.id}"} download>
             Download
           </a>
         </div>
