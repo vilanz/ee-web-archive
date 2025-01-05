@@ -14,3 +14,7 @@ services:
       - ee-data:/var/lib/ee-web-archive
 volumes:
   ee-data:
+networks:
+  # TEMP: customizing the default network name so it doesn't clash with the existing EE Web Archive
+  default:
+    name: beta-ee-web-archive
