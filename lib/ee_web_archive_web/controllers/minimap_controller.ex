@@ -10,7 +10,7 @@ defmodule EEWebArchiveWeb.MinimapController do
 
     if File.exists?(minimap_path) do
       conn
-        |> add_minimap_cache_header()
+        |> add_minimap_headers()
         |> send_file(200, minimap_path)
     else
       world = Worlds.get_by_id(world_id)
@@ -19,10 +19,10 @@ defmodule EEWebArchiveWeb.MinimapController do
       blocks = WorldParser.parse(map_data)
       minimap_data = Minimap.generate(blocks, world.width, world.height)
 
-      case File.write(minimap_path, minimap_data) do
+      case File.write(minimap_path, minimap_data, [:binary]) do
         :ok ->
           conn
-            |> add_minimap_cache_header()
+            |> add_minimap_headers()
             |> send_file(200, minimap_path)
 
         {:error, reason} ->
@@ -33,7 +33,9 @@ defmodule EEWebArchiveWeb.MinimapController do
     end
   end
 
-  defp add_minimap_cache_header(conn) do
-    put_resp_header(conn, "cache-control", "private, max-age=10080")
+  defp add_minimap_headers(conn) do
+    conn
+      |> put_resp_header("content-type", "image/png")
+      |> put_resp_header("cache-control", "private, max-age=10080")
   end
 end
