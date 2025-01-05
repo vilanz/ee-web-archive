@@ -5,7 +5,6 @@ services:
     ports:
       - "4000:4000"
     environment:
-      - PHX_SERVER=true
       - EEWEBARCHIVE_SECRET_KEY_BASE
     volumes:
       - ee-data:/var/lib/ee-web-archive
