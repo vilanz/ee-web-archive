@@ -1,5 +1,5 @@
 services:
-  ee-web-archive:
+  beta-ee-web-archive:
     build: .
     init: true # Recommended by Elixir to reap zombie processes
     ports:
