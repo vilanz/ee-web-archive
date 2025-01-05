@@ -17,7 +17,7 @@ defmodule EEWebArchive.ArchivEE.Worlds do
     ArchivEERepo.preload(world, :owner_crew)
   end
 
-  def add_owner_info_for_json(%{owner_player: %{rowid: rowid, id: id, name: name }} = world) do
+  def add_owner_info_for_json(%{owner_player: %{rowid: rowid, id: id, name: name}} = world) do
     Map.put(world, :owner, %{rowid: rowid, id: id, username: name})
   end
 
@@ -43,12 +43,16 @@ defmodule EEWebArchive.ArchivEE.Worlds do
   end
 
   def list_frequently_played_at_random() do
-    random_worlds_query = from w in World,
-      order_by: fragment("RANDOM()"),
-      where: w.plays > 10000,
-      limit: 20
-    query = from rw in subquery(random_worlds_query),
-      order_by: [desc: rw.plays]
+    random_worlds_query =
+      from w in World,
+        order_by: fragment("RANDOM()"),
+        where: w.plays > 10000,
+        limit: 20
+
+    query =
+      from rw in subquery(random_worlds_query),
+        order_by: [desc: rw.plays]
+
     ArchivEERepo.all(query)
   end
 

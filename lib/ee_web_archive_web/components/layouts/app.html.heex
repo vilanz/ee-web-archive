@@ -11,7 +11,9 @@
     </div>
     <.menu_link to={~p"/"}>Home</.menu_link>
     <.menu_link to={~p"/players"}>Players</.menu_link>
-    <.external_menu_link href="https://pixelwalker.net/" class="text-primary">PixelWalker 🔗</.external_menu_link>
+    <.external_menu_link href="https://pixelwalker.net/" class="text-primary">
+      PixelWalker 🔗
+    </.external_menu_link>
     <.menu_link to="https://forums.everybodyedits.com/viewtopic.php?id=47779" target="_blank">
       Forum thread 🔗
     </.menu_link>
@@ -28,6 +30,6 @@
   </aside>
   <.flash_group flash={@flash} />
   <main class="p-6 w-full">
-    <%= @inner_content %>
+    {@inner_content}
   </main>
 </div>

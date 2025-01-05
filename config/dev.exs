@@ -88,4 +88,6 @@ config :swoosh, :api_client, false
 config :ee_web_archive, EEWebArchive.ArchivEERepo,
   database: "/var/lib/ee-web-archive/ArchivEE.sqlite3",
   load_extensions: ["/var/lib/ee-web-archive/libsqlite_zstd.so"]
-config :ee_web_archive, EEWebArchive.SmileyRepo, database: "/var/lib/ee-web-archive/smiley.sqlite3"
+
+config :ee_web_archive, EEWebArchive.SmileyRepo,
+  database: "/var/lib/ee-web-archive/smiley.sqlite3"

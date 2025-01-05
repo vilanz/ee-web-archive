@@ -5,15 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="csrf-token" content={get_csrf_token()} />
     <meta property="og:title" content={assigns[:meta][:title] || "EE Web Archive"} />
-    <meta property="og:image" content={assigns[:meta][:image_path] || url(~p"/images/smileys/123.png")} />
+    <meta
+      property="og:image"
+      content={assigns[:meta][:image_path] || url(~p"/images/smileys/123.png")}
+    />
     <.live_title suffix=" - EE Web Archive">
-      <%= assigns[:page_title] || "Home" %>
+      {assigns[:page_title] || "Home"}
     </.live_title>
     <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
     <link rel="icon" type="image/png" href={~p"/images/favicon.png"} />
-    <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}></script>
+    <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}>
+    </script>
   </head>
   <body>
-    <%= @inner_content %>
+    {@inner_content}
   </body>
 </html>

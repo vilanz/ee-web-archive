@@ -23,7 +23,9 @@ config :logger, level: :info
 config :ee_web_archive, EEWebArchive.ArchivEERepo,
   database: "/var/lib/ee-web-archive/ArchivEE.sqlite3",
   load_extensions: ["/var/lib/ee-web-archive/libsqlite_zstd.so"]
-config :ee_web_archive, EEWebArchive.SmileyRepo, database: "/var/lib/ee-web-archive/smiley.sqlite3"
+
+config :ee_web_archive, EEWebArchive.SmileyRepo,
+  database: "/var/lib/ee-web-archive/smiley.sqlite3"
 
 # Runtime production configuration, including reading
 # of environment variables, is done on config/runtime.exs.

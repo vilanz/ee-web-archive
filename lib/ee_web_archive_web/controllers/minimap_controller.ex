@@ -10,8 +10,8 @@ defmodule EEWebArchiveWeb.MinimapController do
 
     if File.exists?(minimap_path) do
       conn
-        |> add_minimap_headers()
-        |> send_file(200, minimap_path)
+      |> add_minimap_headers()
+      |> send_file(200, minimap_path)
     else
       world = Worlds.get_by_id(world_id)
 
@@ -22,20 +22,21 @@ defmodule EEWebArchiveWeb.MinimapController do
       case File.write(minimap_path, minimap_data, [:binary]) do
         :ok ->
           conn
-            |> add_minimap_headers()
-            |> send_file(200, minimap_path)
+          |> add_minimap_headers()
+          |> send_file(200, minimap_path)
 
         {:error, reason} ->
           :logger.error("Failed to save ArchivEE minimap for world #{world_id}: #{reason}")
+
           conn
-            |> send_resp(500, "Failed parsing or writing minimap")
+          |> send_resp(500, "Failed parsing or writing minimap")
       end
     end
   end
 
   defp add_minimap_headers(conn) do
     conn
-      |> put_resp_header("content-type", "image/png")
-      |> put_resp_header("cache-control", "private, max-age=10080")
+    |> put_resp_header("content-type", "image/png")
+    |> put_resp_header("cache-control", "private, max-age=10080")
   end
 end

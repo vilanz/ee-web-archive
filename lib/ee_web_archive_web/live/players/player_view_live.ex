@@ -10,18 +10,18 @@ defmodule EEWebArchiveWeb.PlayerViewLive do
       <div class="basis-[350px] shrink-0 flex flex-col gap-2">
         <h1>
           <.smiley player_id={@player.id} scale={2} />
-          <%= @player.name %>
+          {@player.name}
         </h1>
         <div>
           <p>
-            Joined: <b><%= format_date(@player.created) %></b>
+            Joined: <b>{format_date(@player.created)}</b>
           </p>
           <p>
-            Last login: <b><%= format_date(@player.last_login) %></b>
+            Last login: <b>{format_date(@player.last_login)}</b>
           </p>
         </div>
         <div>
-          <h2>Crews: <%= length(@player.crews) %></h2>
+          <h2>Crews: {length(@player.crews)}</h2>
           <div class="flex flex-wrap gap-2">
             <.crew_link :for={crew <- @player.crews} crew={crew} />
             <.empty_list data={@player.crews}>
@@ -30,7 +30,7 @@ defmodule EEWebArchiveWeb.PlayerViewLive do
           </div>
         </div>
         <div>
-          <h2>Friends: <%= length(@player.friends) %></h2>
+          <h2>Friends: {length(@player.friends)}</h2>
           <div class="flex flex-wrap gap-2">
             <.player_link :for={friend <- @player.friends} player={friend} />
             <.empty_list data={@player.friends}>
@@ -40,7 +40,7 @@ defmodule EEWebArchiveWeb.PlayerViewLive do
         </div>
       </div>
       <div>
-        <h1>Worlds: <%= length(@player.worlds) %></h1>
+        <h1>Worlds: {length(@player.worlds)}</h1>
         <.empty_list data={@player.worlds}>
           No worlds found.
         </.empty_list>
@@ -59,6 +59,7 @@ defmodule EEWebArchiveWeb.PlayerViewLive do
 
     smiley_path = Smileys.get_player_smiley_path(player.id)
     full_smiley_path = unverified_url(socket, static_path(socket, smiley_path))
+
     meta = %{
       title: "Player: #{player.name} (EE Web Archive)",
       image_path: full_smiley_path

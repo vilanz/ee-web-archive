@@ -16,9 +16,12 @@ defmodule EEWebArchiveWeb.Components do
   def player_link(assigns) do
     ~H"""
     <div class="">
-      <.link class={["chip shadow-sm", @highlight && "chip-highlight"]} navigate={~p"/players/#{@player.name}"}>
+      <.link
+        class={["chip shadow-sm", @highlight && "chip-highlight"]}
+        navigate={~p"/players/#{@player.name}"}
+      >
         <.smiley player_id={@player.id} />
-        <%= @player.name %>
+        {@player.name}
       </.link>
     </div>
     """
@@ -30,7 +33,7 @@ defmodule EEWebArchiveWeb.Components do
     ~H"""
     <div class="">
       <.link class="chip px-1 shadow-sm" navigate={~p"/crews/#{@crew.id}"}>
-        <%= @crew.name %>
+        {@crew.name}
       </.link>
     </div>
     """
@@ -43,11 +46,17 @@ defmodule EEWebArchiveWeb.Components do
     ~H"""
     <div class="min-h-0 bg-neutral-950 rounded-lg card card-compact shadow-lg text-md">
       <figure class="bg-black p-4">
-        <img class="shadow-lg bg-black" src={"/archivee_minimap/#{@world.id}"} height={@world.height} width={@world.width} loading="lazy"  />
+        <img
+          class="shadow-lg bg-black"
+          src={"/archivee_minimap/#{@world.id}"}
+          height={@world.height}
+          width={@world.width}
+          loading="lazy"
+        />
       </figure>
       <div class="card-body !p-4 gap-3">
-        <h4><%= @world.name %></h4>
-        <div>Plays: <b><%= @world.plays %></b></div>
+        <h4>{@world.name}</h4>
+        <div>Plays: <b>{@world.plays}</b></div>
         <%= if @show_owner do %>
           <div class="flex items-center gap-2">
             By
@@ -56,12 +65,18 @@ defmodule EEWebArchiveWeb.Components do
                 <.player_link player={@world.owner_player} />
               <% @world.owner_crew != nil -> %>
                 <.crew_link crew={@world.owner_crew} />
-              <% true -> %> <span>No owner found</span>
+              <% true -> %>
+                <span>No owner found</span>
             <% end %>
           </div>
         <% end %>
         <div class="flex gap-3">
-          <a type="button" class="btn btn-xs btn-primary" href={"https://pixelwalker.net/world/legacy:#{@world.id}"} target="_blank">
+          <a
+            type="button"
+            class="btn btn-xs btn-primary"
+            href={"https://pixelwalker.net/world/legacy:#{@world.id}"}
+            target="_blank"
+          >
             Play
           </a>
           <a type="button" class="btn btn-xs" href={"/api/worlds/download/#{@world.id}"} download>
@@ -94,7 +109,7 @@ defmodule EEWebArchiveWeb.Components do
     ~H"""
     <li>
       <.link class={"link no-underline bg-neutral-900 " <> @class} navigate={@to} {@rest}>
-        <%= render_slot(@inner_block) %>
+        {render_slot(@inner_block)}
       </.link>
     </li>
     """
@@ -108,8 +123,13 @@ defmodule EEWebArchiveWeb.Components do
   def external_menu_link(assigns) do
     ~H"""
     <li>
-      <.link class={"link no-underline bg-neutral-900 " <> @class} href={@href} target="_blank" {@rest}>
-        <%= render_slot(@inner_block) %>
+      <.link
+        class={"link no-underline bg-neutral-900 " <> @class}
+        href={@href}
+        target="_blank"
+        {@rest}
+      >
+        {render_slot(@inner_block)}
       </.link>
     </li>
     """
@@ -139,10 +159,10 @@ defmodule EEWebArchiveWeb.Components do
     ~H"""
     <li>
       <span class="!bg-inherit !cursor-default">
-        <%= render_slot(@header) %>
+        {render_slot(@header)}
       </span>
       <ul>
-        <%= render_slot(@items) %>
+        {render_slot(@items)}
       </ul>
     </li>
     """
@@ -154,7 +174,7 @@ defmodule EEWebArchiveWeb.Components do
   def empty_list(assigns) do
     ~H"""
     <%= if Enum.empty?(@data) or @data == nil do %>
-      <%= render_slot(@inner_block) %>
+      {render_slot(@inner_block)}
     <% end %>
     """
   end
