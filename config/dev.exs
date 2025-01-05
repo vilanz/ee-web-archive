@@ -87,7 +87,11 @@ config :swoosh, :api_client, false
 # Local ArchivEE database config
 config :ee_web_archive, EEWebArchive.ArchivEERepo,
   database: "/var/lib/ee-web-archive/ArchivEE.sqlite3",
-  load_extensions: ["/var/lib/ee-web-archive/libsqlite_zstd.so"]
+  load_extensions: ["/var/lib/ee-web-archive/libsqlite_zstd.so"],
+  # We're in dev :)
+  show_sensitive_data_on_connection_error: true
 
 config :ee_web_archive, EEWebArchive.SmileyRepo,
-  database: "/var/lib/ee-web-archive/smiley.sqlite3"
+  database: "/var/lib/ee-web-archive/smiley.sqlite3",
+  # We're in dev :)
+  show_sensitive_data_on_connection_error: true

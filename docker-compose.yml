@@ -1,0 +1,17 @@
+services:
+  ee-web-archive:
+    build: .
+    init: true # Recommended by Elixir to reap zombie processes
+    ports:
+      - "4000:4000"
+    environment:
+      - PHX_SERVER=true
+      - EEWEBARCHIVE_SECRET_KEY_BASE
+    volumes:
+      - ee-data:/var/lib/ee-web-archive
+  ee-data-setup:
+    build: ./ee_data
+    volumes:
+      - ee-data:/var/lib/ee-web-archive
+volumes:
+  ee-data:

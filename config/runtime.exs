@@ -5,7 +5,6 @@ import Config
 # system starts, so it is typically used to load production configuration
 # and secrets from environment variables or elsewhere. Do not define
 # any compile-time configuration in here, as it won't be applied.
-# The block below contains prod specific runtime configuration.
 
 # ## Using releases
 #
@@ -42,13 +41,11 @@ if config_env() == :prod do
   # to check this value into version control, so we use an environment
   # variable instead.
   secret_key_base =
-    System.get_env("SECRET_KEY_BASE_EEARCHIVE") ||
+    System.get_env("EEWEBARCHIVE_SECRET_KEY_BASE") ||
       raise """
       environment variable SECRET_KEY_BASE_EEARCHIVE is missing.
       You can generate one by calling: mix phx.gen.secret
       """
-
-  port = String.to_integer(System.get_env("PORT") || "4000")
 
   config :ee_web_archive, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
 
@@ -60,12 +57,11 @@ if config_env() == :prod do
       # See the documentation on https://hexdocs.pm/bandit/Bandit.html#t:options/0
       # for details about using IPv6 vs IPv4 and loopback vs public addresses.
       ip: {0, 0, 0, 0, 0, 0, 0, 0},
-      port: port
+      port: 4000
     ],
     secret_key_base: secret_key_base,
     check_origin: [
-      "https://new.offlinee.com",
-      "https://test.offlinee.com"
+      "https://new.offlinee.com"
     ]
 
   # ## SSL Support

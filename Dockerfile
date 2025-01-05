@@ -7,13 +7,13 @@
 # This file is based on these images:
 #
 #   - https://hub.docker.com/r/hexpm/elixir/tags - for the build image
-#   - https://hub.docker.com/_/debian?tab=tags&page=1&name=bullseye-20240904-slim - for the release image
+#   - https://hub.docker.com/_/debian?tab=tags&page=1&name=bullseye-20241223-slim - for the release image
 #   - https://pkgs.org/ - resource for finding needed packages
-#   - Ex: hexpm/elixir:1.17.2-erlang-27.0.1-debian-bullseye-20240904-slim
+#   - Ex: hexpm/elixir:1.18.1-erlang-27.0.1-debian-bullseye-20241223-slim
 #
-ARG ELIXIR_VERSION=1.17.2
+ARG ELIXIR_VERSION=1.18.1
 ARG OTP_VERSION=27.0.1
-ARG DEBIAN_VERSION=bullseye-20240904-slim
+ARG DEBIAN_VERSION=bullseye-20241223-slim
 
 ARG BUILDER_IMAGE="hexpm/elixir:${ELIXIR_VERSION}-erlang-${OTP_VERSION}-debian-${DEBIAN_VERSION}"
 ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
@@ -21,8 +21,11 @@ ARG RUNNER_IMAGE="debian:${DEBIAN_VERSION}"
 FROM ${BUILDER_IMAGE} as builder
 
 # install build dependencies
-RUN apt-get update -y && apt-get install -y build-essential git \
+RUN apt-get update -y && apt-get install -y build-essential git curl \
     && apt-get clean && rm -f /var/lib/apt/lists/*_*
+
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
+RUN apt-get install -y nodejs
 
 # prepare build dir
 WORKDIR /app
@@ -52,6 +55,7 @@ COPY lib lib
 COPY assets assets
 
 # compile assets
+RUN npm --prefix ./assets ci --progress=false --no-audit --loglevel=error
 RUN mix assets.deploy
 
 # Compile the release
@@ -88,8 +92,5 @@ ENV MIX_ENV="prod"
 COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/ee_web_archive ./
 
 USER nobody
-
-RUN apt-get install tini
-ENTRYPOINT ["/usr/bin/tini", "--"]
 
 CMD ["/app/bin/server"]

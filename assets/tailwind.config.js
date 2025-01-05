@@ -25,6 +25,9 @@ module.exports = {
         "error": "#ff0000",
       },
     }],
+    daisyui: {
+      logs: false,
+    },
   },
   plugins: [
     require("@tailwindcss/forms")({
