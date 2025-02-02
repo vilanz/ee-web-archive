@@ -116,7 +116,8 @@ defmodule EEWebArchive.ArchivEE.WorldParser.BlockType do
     1629,
     1631,
     1633,
-    1635
+    1635,
+    1517
   ]
 
   @sorta_rotatable_blocks [1101, 1102, 1103, 1104, 1105]
@@ -136,20 +137,21 @@ defmodule EEWebArchive.ArchivEE.WorldParser.BlockType do
     1620,
     1079,
     1080,
-    1582,
     421,
     422,
     461,
     1584
   ]
 
-  @enum_blocks [423, 1027, 1028, 418, 417, 420, 419, 453, 1517]
+  @enum_blocks [417, 418, 419, 420, 423, 453, 1027, 1028]
 
   @music_blocks [83, 77, 1520]
 
   @portal_blocks [381, 242]
 
   @world_portal_block 374
+
+  @world_portal_spawn 1582
 
   @sign_block 385
 
@@ -210,6 +212,9 @@ defmodule EEWebArchive.ArchivEE.WorldParser.BlockType do
   def get(block_id) when block_id in @npc_blocks,
     do: :npc
 
+  def get(block_id) when block_id == @world_portal_spawn,
+    do: :world_portal_spawn
+
   def get(_block_id), do: :normal
 
   def read_and_ignore_block_type(block_type, data) do
@@ -217,7 +222,15 @@ defmodule EEWebArchive.ArchivEE.WorldParser.BlockType do
       block_type == :normal ->
         data
 
-      block_type in [:morphable, :rotatable, :sorta_rotatable, :number, :enum, :music] ->
+      block_type in [
+        :morphable,
+        :rotatable,
+        :sorta_rotatable,
+        :number,
+        :enum,
+        :music,
+        :world_portal_spawn
+      ] ->
         <<_::integer-32, data::binary>> = data
         data
 
