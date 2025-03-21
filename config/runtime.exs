@@ -61,7 +61,8 @@ if config_env() == :prod do
     ],
     secret_key_base: secret_key_base,
     check_origin: [
-      "https://new.offlinee.com"
+      "https://new.offlinee.com",
+      "https://beta.offlinee.com"
     ]
 
   # ## SSL Support
