@@ -4,7 +4,7 @@ defmodule EEWebArchive.ArchivEE.Worlds do
   alias EEWebArchive.ArchivEERepo
   alias EEWebArchive.ArchivEE.World
 
-  @spec get_by_id(integer()) :: World.t()
+  @spec get_by_id(integer()) :: World.t() | nil
   def get_by_id(id) do
     query =
       from w in World,
