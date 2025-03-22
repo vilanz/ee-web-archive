@@ -38,11 +38,25 @@ defmodule EEWebArchiveWeb.WorldController do
   def get_random_worlds(conn, _) do
     fetch_query_params(conn)
 
-    {minimum_plays_param, ""} = Integer.parse(Map.get(conn.params, "min_plays", "10000"))
-    minimum_plays = max(0, minimum_plays_param)
+    default_minimum_plays = 10000
 
-    {limit_param, ""} = Integer.parse(Map.get(conn.params, "limit", "10"))
-    limit = max(1, min(30, limit_param))
+    minimum_plays_param =
+      Map.get(conn.params, "min_plays", Integer.to_string(default_minimum_plays))
+
+    minimum_plays =
+      case Integer.parse(minimum_plays_param) do
+        {plays, ""} -> max(0, plays)
+        _ -> default_minimum_plays
+      end
+
+    default_limit = 10
+    limit_param = Map.get(conn.params, "limit", Integer.to_string(default_limit))
+
+    limit =
+      case Integer.parse(limit_param) do
+        {limit, ""} -> max(1, min(30, limit))
+        _ -> default_limit
+      end
 
     worlds =
       Worlds.list_frequently_played_at_random(minimum_plays, limit)
