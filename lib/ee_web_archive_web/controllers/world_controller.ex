@@ -36,8 +36,16 @@ defmodule EEWebArchiveWeb.WorldController do
   end
 
   def get_random_worlds(conn, _) do
+    fetch_query_params(conn)
+
+    {minimum_plays_param, ""} = Integer.parse(Map.get(conn.params, "min_plays", "10000"))
+    minimum_plays = max(0, minimum_plays_param)
+
+    {limit_param, ""} = Integer.parse(Map.get(conn.params, "limit", "10"))
+    limit = max(1, min(30, limit_param))
+
     worlds =
-      Worlds.list_frequently_played_at_random()
+      Worlds.list_frequently_played_at_random(minimum_plays, limit)
       |> Enum.map(&Worlds.add_owner_to_json/1)
       |> Enum.map(&Worlds.add_crew_to_json/1)
 

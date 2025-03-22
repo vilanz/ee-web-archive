@@ -62,12 +62,12 @@ defmodule EEWebArchive.ArchivEE.Worlds do
     data
   end
 
-  def list_frequently_played_at_random() do
+  def list_frequently_played_at_random(minimum_plays \\ 10000, limit \\ 10) do
     random_worlds_query =
       from w in World,
         order_by: fragment("RANDOM()"),
-        where: w.plays > 10000,
-        limit: 20
+        where: w.plays >= ^minimum_plays,
+        limit: ^limit
 
     query =
       from rw in subquery(random_worlds_query),
