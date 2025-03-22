@@ -6,7 +6,6 @@ defmodule EEWebArchiveWeb.WorldController do
   def download_world(conn, %{"world_id" => world_id}) do
     world =
       Worlds.get_by_id(world_id)
-      |> Worlds.preload_owner_player()
 
     if world == nil do
       conn
@@ -24,8 +23,8 @@ defmodule EEWebArchiveWeb.WorldController do
   def get_world_info(conn, %{"world_id" => world_id}) do
     world =
       Worlds.get_by_id(world_id)
-      |> Worlds.preload_owner_player()
-      |> Worlds.add_owner_info_for_json()
+      |> Worlds.add_owner_to_json()
+      |> Worlds.add_crew_to_json()
 
     if world == nil do
       conn
@@ -39,6 +38,8 @@ defmodule EEWebArchiveWeb.WorldController do
   def get_random_worlds(conn, _) do
     worlds =
       Worlds.list_frequently_played_at_random()
+      |> Enum.map(&Worlds.add_owner_to_json/1)
+      |> Enum.map(&Worlds.add_crew_to_json/1)
 
     conn
     |> json(worlds)
@@ -47,8 +48,9 @@ defmodule EEWebArchiveWeb.WorldController do
   def get_worlds_by_owner(conn, %{"owner_name" => owner_name}) do
     worlds =
       Worlds.get_by_owner_name(owner_name)
+      |> Enum.map(&Worlds.add_crew_to_json/1)
 
-    if worlds == nil do
+    if length(worlds) == 0 do
       conn
       |> send_resp(404, "World not found")
     else

@@ -6,7 +6,13 @@ defmodule EEWebArchive.ArchivEE.Worlds do
 
   @spec get_by_id(integer()) :: World.t()
   def get_by_id(id) do
-    ArchivEERepo.get_by(World, id: id)
+    query =
+      from w in World,
+        where: w.id == ^id,
+        preload: [:owner_player, :owner_crew],
+        select: w
+
+    ArchivEERepo.one(query)
   end
 
   def get_by_owner_name(name) do
@@ -14,26 +20,30 @@ defmodule EEWebArchive.ArchivEE.Worlds do
       from w in World,
         join: p in assoc(w, :owner_player),
         where: p.name == ^name,
+        preload: [:owner_crew],
         select: w
 
     ArchivEERepo.all(query)
-  end
-
-  def preload_owner_player(world) do
-    ArchivEERepo.preload(world, :owner_player)
   end
 
   def preload_owner_crew(world) do
     ArchivEERepo.preload(world, :owner_crew)
   end
 
-  def add_owner_info_for_json(%{owner_player: %{rowid: rowid, id: id, name: name}} = world) do
-    Map.put(world, :owner, %{rowid: rowid, id: id, username: name})
+  def add_owner_to_json(world) do
+    with %{owner_player: %{rowid: rowid, id: id, name: name}} <- world do
+      Map.put(world, :owner, %{rowid: rowid, id: id, username: name})
+    else
+      _ -> world
+    end
   end
 
-  # If there's no owner_player info (e.g. world not found)
-  def add_owner_info_for_json(world) do
-    world
+  def add_crew_to_json(world) do
+    with %{owner_crew: %{rowid: rowid, id: id, name: name}} <- world do
+      Map.put(world, :crew, %{rowid: rowid, id: id, name: name})
+    else
+      _ -> world
+    end
   end
 
   @spec get_map_data(integer()) :: bitstring()
@@ -61,6 +71,7 @@ defmodule EEWebArchive.ArchivEE.Worlds do
 
     query =
       from rw in subquery(random_worlds_query),
+        preload: [:owner_player, :owner_crew],
         order_by: [desc: rw.plays]
 
     ArchivEERepo.all(query)
@@ -73,6 +84,7 @@ defmodule EEWebArchive.ArchivEE.Worlds do
     query =
       from w in World,
         order_by: [desc: :plays],
+        preload: [:owner_player, :owner_crew],
         where: like(w.name, ^"%#{name}%"),
         limit: ^items_per_page,
         offset: ^offset

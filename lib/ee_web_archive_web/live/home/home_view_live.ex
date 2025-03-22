@@ -21,8 +21,6 @@ defmodule EEWebArchiveWeb.HomeViewLive do
   def mount(_params, _session, socket) do
     featured_worlds =
       Worlds.list_frequently_played_at_random()
-      |> Worlds.preload_owner_player()
-      |> Worlds.preload_owner_crew()
 
     {:ok,
      assign(socket,
@@ -34,8 +32,6 @@ defmodule EEWebArchiveWeb.HomeViewLive do
   def handle_event("refresh_worlds", _value, socket) do
     featured_worlds =
       Worlds.list_frequently_played_at_random()
-      |> Worlds.preload_owner_player()
-      |> Worlds.preload_owner_crew()
 
     {:noreply, assign(socket, :featured_worlds, featured_worlds)}
   end
