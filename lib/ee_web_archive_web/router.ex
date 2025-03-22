@@ -1,8 +1,6 @@
 defmodule EEWebArchiveWeb.Router do
   use EEWebArchiveWeb, :router
 
-  # import EEWebArchiveWeb.UserAuth
-
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -10,7 +8,6 @@ defmodule EEWebArchiveWeb.Router do
     plug :put_root_layout, html: {EEWebArchiveWeb.Layouts, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    # plug :fetch_current_user
   end
 
   pipeline :api do
@@ -20,8 +17,11 @@ defmodule EEWebArchiveWeb.Router do
   scope "/", EEWebArchiveWeb do
     pipe_through :browser
 
-    get "/archivee_minimap/:world_id", MinimapController, :archivee_minimap
     get "/smileys/:player_id", SmileyController, :by_player
+    # Browser-specific version of minimap API endpoint
+    get "/worlds/minimap/:world_id", MinimapController, :archivee_minimap
+    # For backwards compatibility with PW, remove later
+    get "/archivee_minimap/:world_id", MinimapController, :archivee_minimap
   end
 
   scope "/api", EEWebArchiveWeb do
@@ -30,6 +30,7 @@ defmodule EEWebArchiveWeb.Router do
     # This is currently adapted to PixelWalker's needs.
     # We want to have a more general API later.
 
+    get "/worlds/minimap/:world_id", MinimapController, :archivee_minimap
     get "/worlds/download/:world_id", WorldController, :download_world
     get "/worlds/info/:world_id", WorldController, :get_world_info
     get "/worlds/by_owner/:owner_name", WorldController, :get_worlds_by_owner

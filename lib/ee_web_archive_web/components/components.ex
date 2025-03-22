@@ -48,7 +48,7 @@ defmodule EEWebArchiveWeb.Components do
       <figure class="bg-black p-4">
         <img
           class="shadow-lg bg-black"
-          src={"/archivee_minimap/#{@world.id}"}
+          src={"/worlds/minimap/#{@world.id}"}
           height={@world.height}
           width={@world.width}
           loading="lazy"
