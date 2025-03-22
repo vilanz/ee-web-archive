@@ -16,7 +16,7 @@ A browsable and queryable archive for an old game from my childhood years :)
 
 ## Running the project
 
-- Run `sudo ./setup.sh` to set up the Everybody Edits data locally. **Needs Python 3 and pip.**
+- Run `sudo ./ee_data/setup.sh` to set up the Everybody Edits data locally. **Needs Python 3 and pip.**
 - Install [`asdf`](https://asdf-vm.com/) and set up Elixir + Erlang:
   1. Install [the prereq packages](https://github.com/asdf-vm/asdf-erlang?tab=readme-ov-file#before-asdf-install) for `asdf-erlang`.
   2. run `asdf plugin add erlang && asdf plugin add elixir`.
