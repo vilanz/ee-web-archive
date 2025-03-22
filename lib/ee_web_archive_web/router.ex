@@ -27,8 +27,15 @@ defmodule EEWebArchiveWeb.Router do
   scope "/api", EEWebArchiveWeb do
     pipe_through :api
 
+    # This is currently adapted to PixelWalker's needs.
+    # We want to have a more general API later.
+
     get "/worlds/download/:world_id", WorldController, :download_world
-    get "/worlds/info/:world_id", WorldController, :world_info
+    get "/worlds/info/:world_id", WorldController, :get_world_info
+    get "/worlds/by_owner/:owner_name", WorldController, :get_worlds_by_owner
+    get "/worlds/random", WorldController, :get_random_worlds
+
+    get "/players/:name", PlayerController, :get_player
   end
 
   # Enable LiveDashboard and Swoosh mailbox preview in development

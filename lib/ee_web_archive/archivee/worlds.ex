@@ -9,6 +9,16 @@ defmodule EEWebArchive.ArchivEE.Worlds do
     ArchivEERepo.get_by(World, id: id)
   end
 
+  def get_by_owner_name(name) do
+    query =
+      from w in World,
+        join: p in assoc(w, :owner_player),
+        where: p.name == ^name,
+        select: w
+
+    ArchivEERepo.all(query)
+  end
+
   def preload_owner_player(world) do
     ArchivEERepo.preload(world, :owner_player)
   end

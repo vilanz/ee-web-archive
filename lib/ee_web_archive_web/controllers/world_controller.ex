@@ -21,7 +21,7 @@ defmodule EEWebArchiveWeb.WorldController do
     end
   end
 
-  def world_info(conn, %{"world_id" => world_id}) do
+  def get_world_info(conn, %{"world_id" => world_id}) do
     world =
       Worlds.get_by_id(world_id)
       |> Worlds.preload_owner_player()
@@ -33,6 +33,27 @@ defmodule EEWebArchiveWeb.WorldController do
     else
       conn
       |> json(world)
+    end
+  end
+
+  def get_random_worlds(conn, _) do
+    worlds =
+      Worlds.list_frequently_played_at_random()
+
+    conn
+    |> json(worlds)
+  end
+
+  def get_worlds_by_owner(conn, %{"owner_name" => owner_name}) do
+    worlds =
+      Worlds.get_by_owner_name(owner_name)
+
+    if worlds == nil do
+      conn
+      |> send_resp(404, "World not found")
+    else
+      conn
+      |> json(worlds)
     end
   end
 end

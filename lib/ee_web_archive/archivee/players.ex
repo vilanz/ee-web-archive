@@ -7,7 +7,7 @@ defmodule EEWebArchive.ArchivEE.Players do
   alias EEWebArchive.ArchivEE.World
   alias EEWebArchive.ArchivEE.Crew
 
-  @spec get_by_name(String.t()) :: %Player{}
+  @spec get_by_name(String.t()) :: %Player{} | nil
   def get_by_name(name) do
     ArchivEERepo.get_by(Player, name: name)
   end
